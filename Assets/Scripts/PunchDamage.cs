@@ -20,11 +20,11 @@ public class PunchDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player")
         {
             Health health = other.gameObject.GetComponent<Health>();
             health.TakeDamage(_damage);
-            Debug.Log("Yeouch");
+            Debug.Log("Yeouch + " + other.gameObject.gameObject.name);
         }
     }
 }

@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         _camera.fieldOfView = _fieldOfView;
         _mainCamera.transform.parent = transform;
-        _mainCamera.transform.localPosition = new Vector3(0, 1.5f, 0);
+        _mainCamera.transform.localPosition = new Vector3(0, 1, 0);
         _mainCamera.transform.localRotation = Quaternion.Euler(Vector3.zero);
     }
 

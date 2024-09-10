@@ -18,13 +18,13 @@ public class PlayerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) StartCoroutine(Punch());
+        if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") StartCoroutine(Punch(_punchTimer));
     }
 
-    IEnumerator Punch()
+    public IEnumerator Punch(float punchTimer)
     {
         _punchHitBox.enabled = true;
-        yield return new WaitForSeconds(_punchTimer);
+        yield return new WaitForSeconds(punchTimer);
         _punchHitBox.enabled = false;
     }
 }
