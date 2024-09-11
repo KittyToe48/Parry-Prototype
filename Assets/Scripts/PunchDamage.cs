@@ -20,11 +20,16 @@ public class PunchDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Health health = other.gameObject.GetComponent<Health>();
+        
+        Debug.Log("Yeouch + " + other.gameObject.gameObject.name);
+
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player")
         {
-            Health health = other.gameObject.GetComponent<Health>();
-            health.TakeDamage(_damage);
-            Debug.Log("Yeouch + " + other.gameObject.gameObject.name);
+            MeleeCombat combat = other.gameObject.GetComponent<MeleeCombat>();
+            if (combat.GuardState) health.TakeDamage(_damage / 2);
+            else health.TakeDamage(_damage);
+
         }
     }
 }
