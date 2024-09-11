@@ -54,6 +54,8 @@ public class Health : MonoBehaviour
 
     void Death()
     {
+        //if (gameObject.tag == "Player") Application.Quit();
         Destroy(gameObject);
+
     }
 }
