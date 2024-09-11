@@ -5,23 +5,30 @@ using UnityEngine.AI;
 
 public class ChaserAI : MonoBehaviour
 {
+    [SerializeField] Material[] _materials;
+    MeshRenderer _meshRenderer;
+
     [SerializeField] float _attackCooldown;
     [SerializeField] float _punchTimer;
+
+    [SerializeField] AnimationClip _punchClip;
 
     NavMeshAgent _agent;
 
     GameObject _player;
 
-    PlayerCombat _combat;
+    MeleeCombat _combat;
 
     bool _attacking = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        _meshRenderer = GetComponent<MeshRenderer>();
+
         _player = GameObject.FindGameObjectWithTag("Player");
 
-        _combat = GetComponent<PlayerCombat>();
+        _combat = GetComponent<MeleeCombat>();
         _agent = GetComponent<NavMeshAgent>();
     }
 
@@ -47,15 +54,18 @@ public class ChaserAI : MonoBehaviour
         _attacking = true;
         Debug.Log("Let me introduce you to the NEW JOCKER!");
         float attackCooldown = _attackCooldown;
+        _meshRenderer.material = _materials[1];
         while(true)
         {
             yield return null;
             attackCooldown -= Time.deltaTime;
             if (attackCooldown <= 0)
             {
-                StartCoroutine(_combat.Punch(_punchTimer));
-                yield return new WaitForSeconds(_punchTimer);
+                _combat.Punch();
+                _meshRenderer.material = _materials[2];
+                yield return new WaitForSeconds(_punchClip.length);
                 _attacking = false;
+                _meshRenderer.material = _materials[0];
                 break;
             }
         }

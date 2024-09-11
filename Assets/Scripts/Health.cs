@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] bool _immortal;
 
-    //[SerializeField] TextMeshProUGUI _healthText;
+    [SerializeField] TextMeshProUGUI _healthText;
     //[SerializeField] TextMeshProUGUI _scoreText;
     float _health, _damageBuffer, _damageBufferValue = 0.5f;
     [SerializeField] float _maxHealth;
@@ -17,7 +17,10 @@ public class Health : MonoBehaviour
     void Start()
     {
         _health = _maxHealth;
-        //_healthText.text = _health.ToString() + " / " + _maxHealth;
+        if (gameObject.tag == "Player")
+        {
+            _healthText.text = _health.ToString() + " / " + _maxHealth;
+        }
         _damageBuffer = _damageBufferValue;
     }
 
@@ -32,7 +35,10 @@ public class Health : MonoBehaviour
         if (!_immortal)
         {
             _health -= damage;
-            //_healthText.text = _health.ToString() + " / " + _maxHealth;
+            if (gameObject.tag == "Player")
+            {
+                _healthText.text = _health.ToString() + " / " + _maxHealth;
+            }
             if (_health <= 0)
             {
                 Death();
