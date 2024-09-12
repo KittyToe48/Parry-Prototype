@@ -10,15 +10,13 @@ public class MeleeCombat : MonoBehaviour
 
     [SerializeField] GameObject _punchObject;
     Animator _animator;
-    Animation _animations;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        _animator = GetComponent<Animator>();
-
-        _animations = _punchObject.GetComponent<Animation>();
+        _animator = transform.GetChild(0).GetComponent<Animator>();
         
     }
 
@@ -26,18 +24,26 @@ public class MeleeCombat : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") Punch();
-        if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") Guard();
+        if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") GuardUp();
+        if (Input.GetMouseButtonUp(1) && gameObject.tag == "Player") GuardDown();
     }
 
     public void Punch()
     {
         _animator.SetTrigger("Punch Trigger");
-        //_animations.Play();
     }
 
-    public void Guard()
+    public void GuardUp()
     {
+        _animator.SetTrigger("Guard Trigger");
         GuardState = true;
+    }
+
+    public void GuardDown()
+    {
+        _animator.StopPlayback();
+        _animator.SetTrigger("Guard Trigger");
+        GuardState = false;
     }
 
     public void Stunned()
