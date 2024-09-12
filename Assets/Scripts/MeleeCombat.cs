@@ -9,12 +9,17 @@ public class MeleeCombat : MonoBehaviour
     [SerializeField] float _punchTimer;
 
     [SerializeField] GameObject _punchObject;
-    Animation _punchAnim;
+    Animator _animator;
+    Animation _animations;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        _punchAnim = _punchObject.GetComponent<Animation>();
+        _animator = GetComponent<Animator>();
+
+        _animations = _punchObject.GetComponent<Animation>();
+        
     }
 
     // Update is called once per frame
@@ -26,7 +31,8 @@ public class MeleeCombat : MonoBehaviour
 
     public void Punch()
     {
-        _punchAnim.Play();
+        _animator.SetTrigger("Punch Trigger");
+        //_animations.Play();
     }
 
     public void Guard()
