@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class MeleeCombat : MonoBehaviour
 {
+    public bool ParryState = false;
     public bool GuardState = false;
+    public bool Stunned = false;
 
     [SerializeField] float _punchTimer;
 
     [SerializeField] GameObject _punchObject;
     Animator _animator;
 
-
+    // ToDo: Testa med att sätta meleecombat i armarna.
 
     // Start is called before the first frame update
     void Start()
@@ -36,28 +38,26 @@ public class MeleeCombat : MonoBehaviour
     public void GuardUp()
     {
         _animator.SetTrigger("Guard Trigger");
-        GuardState = true;
     }
 
     public void GuardDown()
     {
         _animator.StopPlayback();
         _animator.SetTrigger("Guard Trigger");
-        GuardState = false;
     }
 
-    public void Stunned()
-    {
-        if (gameObject.tag == "Player")
-        {
+    //public void Stunned() //Gör om till coroutine
+    //{
+    //    if (gameObject.tag == "Player")
+    //    {
 
-        }
-        else if (gameObject.tag == "Enemy")
-        {
+    //    }
+    //    else if (gameObject.tag == "Enemy")
+    //    {
             
-        }
+    //    }
             
-    }
+    //}
 
     //public IEnumerator Punch(float punchTimer)
     //{

@@ -35,7 +35,8 @@ public class ChaserAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Chase();
+        if (!_combat.Stunned) Chase();
+
     }
 
     void Chase() // Distance eller psyhics.checksphere?
@@ -64,6 +65,12 @@ public class ChaserAI : MonoBehaviour
                 _combat.Punch();
                 _meshRenderer.material = _materials[2];
                 yield return new WaitForSeconds(_punchClip.length);
+                _attacking = false;
+                _meshRenderer.material = _materials[0];
+                break;
+            }
+            else if (_combat.Stunned)
+            {
                 _attacking = false;
                 _meshRenderer.material = _materials[0];
                 break;

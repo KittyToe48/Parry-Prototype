@@ -28,6 +28,7 @@ public class PunchDamage : MonoBehaviour
         {
             MeleeCombat combat = other.gameObject.GetComponent<MeleeCombat>();
             if (combat.GuardState) health.TakeDamage(_damage / 2);
+            else if (combat.ParryState) combat.Stunned = true; // Pröva göra en coroutine så att stun får tid att försvinna
             else health.TakeDamage(_damage);
 
         }
