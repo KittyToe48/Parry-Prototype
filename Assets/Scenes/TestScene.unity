@@ -1223,8 +1223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031a8fe31d8a248418fdce28b9fd84f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dummy: {fileID: 2093908211725281378, guid: 64579e7391b8c554a96d9c1f001b0eff, type: 3}
+  _dummy: {fileID: 3274956995661635633, guid: f1de5a6a1125cd44182fdeaf353fe26f, type: 3}
   _enemy: {fileID: 3274956995661635633, guid: ce930ee34870de14e8de1196067cf39e, type: 3}
+  _pucci: {fileID: 3274956995661635633, guid: 610ef8ad71dee6547a573a3a3975772c, type: 3}
 --- !u!1 &1397694144
 GameObject:
   m_ObjectHideFlags: 0

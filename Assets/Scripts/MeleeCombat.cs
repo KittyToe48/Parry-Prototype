@@ -20,25 +20,24 @@ public class MeleeCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") Punch();
+            if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") Punch();
         if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") GuardUp();
         if (Input.GetMouseButtonUp(1) && gameObject.tag == "Player") GuardDown();
     }
 
     public void Punch()
     {
-        _animator.SetTrigger("Punch Trigger");
+        if (!ParryState &&  !GuardState) _animator.SetTrigger("Punch Trigger");
     }
 
     public void GuardUp()
     {
-        _animator.SetTrigger("Guard Trigger");
+        _animator.SetTrigger("Up Trigger");
     }
 
     public void GuardDown()
     {
-        _animator.StopPlayback();
-        _animator.SetTrigger("Guard Trigger");
+        _animator.SetTrigger("Down Trigger");
     }
 
     public IEnumerator StunnedTimer() //Gör om till coroutine
