@@ -8,17 +8,12 @@ public class MeleeCombat : MonoBehaviour
     public bool GuardState = false;
     public bool Stunned = false;
 
-    [SerializeField] float _punchTimer;
-
-    [SerializeField] GameObject _punchObject;
     Animator _animator;
-
-    // ToDo: Testa med att sätta meleecombat i armarna.
 
     // Start is called before the first frame update
     void Start()
     {
-        _animator = transform.GetChild(0).GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         
     }
 
@@ -46,18 +41,20 @@ public class MeleeCombat : MonoBehaviour
         _animator.SetTrigger("Guard Trigger");
     }
 
-    //public void Stunned() //Gör om till coroutine
-    //{
-    //    if (gameObject.tag == "Player")
-    //    {
-
-    //    }
-    //    else if (gameObject.tag == "Enemy")
-    //    {
-            
-    //    }
-            
-    //}
+    public IEnumerator StunnedTimer() //Gör om till coroutine
+    {
+        Debug.Log("Arggh I am stunned: " + gameObject.tag);
+        Stunned = true;
+        if (gameObject.tag == "Player")
+        {
+            yield return new WaitForSeconds(2);
+        }
+        else if (gameObject.tag == "Enemy")
+        {
+            yield return new WaitForSeconds(2);
+        }
+        Stunned = false;
+    }
 
     //public IEnumerator Punch(float punchTimer)
     //{

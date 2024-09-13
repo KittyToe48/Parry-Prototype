@@ -26,9 +26,13 @@ public class PunchDamage : MonoBehaviour
 
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player")
         {
-            MeleeCombat combat = other.gameObject.GetComponent<MeleeCombat>();
+            MeleeCombat combat = other.gameObject.transform.GetChild(0).GetComponent<MeleeCombat>();
             if (combat.GuardState) health.TakeDamage(_damage / 2);
-            else if (combat.ParryState) combat.Stunned = true; // Pröva göra en coroutine så att stun får tid att försvinna
+            else if (combat.ParryState)
+            {
+                MeleeCombat stunned = transform.GetComponentInParent<MeleeCombat>();
+                StartCoroutine(stunned.StunnedTimer());
+            }
             else health.TakeDamage(_damage);
 
         }

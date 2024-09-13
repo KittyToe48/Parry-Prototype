@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2492501080527149569}
   - component: {fileID: 679227851727068293}
+  - component: {fileID: 176945698233689625}
   m_Layer: 6
   m_Name: Arms
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 741979313320948323}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -55,6 +56,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &176945698233689625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741979313320948323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b76642f12fe4f94d9c232f30e3403b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParryState: 0
+  GuardState: 0
+  Stunned: 0
 --- !u!1 &3274956995661635633
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,7 +86,6 @@ GameObject:
   - component: {fileID: 3039148886660385402}
   - component: {fileID: 6027813573962221865}
   - component: {fileID: 246400206415237347}
-  - component: {fileID: 5548135226324186528}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -222,23 +237,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: ad6532e6d9af13142abe72887eabecbd, type: 2}
   - {fileID: 2100000, guid: 1ba9e742a3107474b8cf5588f52f496a, type: 2}
   _attackCooldown: 1
-  _punchTimer: 0.5
   _punchClip: {fileID: 7400000, guid: b771549bac299d9498963c209c8a42e6, type: 2}
---- !u!114 &5548135226324186528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3274956995661635633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b76642f12fe4f94d9c232f30e3403b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GuardState: 0
-  _punchTimer: 0.5
-  _punchObject: {fileID: 0}
 --- !u!1 &3479243883599741198
 GameObject:
   m_ObjectHideFlags: 0

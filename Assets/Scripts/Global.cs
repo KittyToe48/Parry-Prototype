@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugController : MonoBehaviour
+public class Global : MonoBehaviour
 {
     [SerializeField] GameObject _dummy;
     [SerializeField] GameObject _enemy;
