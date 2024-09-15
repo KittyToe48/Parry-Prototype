@@ -1855,6 +1855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _immortal: 0
+  _timeInvincible: 0.5
   _healthText: {fileID: 1632788496}
   _maxHealth: 30
 --- !u!1 &3167231770111656064
@@ -1931,7 +1932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b9cf63a844764488ada1ffc7323634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 10
+  Damage: 10
 --- !u!4 &4699168343867775341
 Transform:
   m_ObjectHideFlags: 0

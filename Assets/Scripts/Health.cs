@@ -6,11 +6,14 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    // Vides verk
     [SerializeField] bool _immortal;
+    bool _invincible = false;
+    [SerializeField] float _timeInvincible;
 
     [SerializeField] TextMeshProUGUI _healthText;
     //[SerializeField] TextMeshProUGUI _scoreText;
-    float _health, _damageBuffer, _damageBufferValue = 0.5f;
+    float _health;
     [SerializeField] float _maxHealth;
 
     // Start is called before the first frame update
@@ -21,18 +24,16 @@ public class Health : MonoBehaviour
         {
             _healthText.text = _health.ToString() + " / " + _maxHealth;
         }
-        _damageBuffer = _damageBufferValue;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //_damageBuffer -= Time.deltaTime;
     }
 
     public void TakeDamage(float damage)
     {
-        if (!_immortal)
+        if (!_immortal && !_invincible)
         {
             _health -= damage;
             if (gameObject.tag == "Player")
@@ -43,8 +44,15 @@ public class Health : MonoBehaviour
             {
                 Death();
             }
-            _damageBuffer = _damageBufferValue;
+            StartCoroutine(Invinsibility());
         }
+    }
+
+    IEnumerator Invinsibility()
+    {
+        _invincible = true;
+        yield return new WaitForSeconds(_timeInvincible);
+        _invincible = false;
     }
 
     public void TakeHealth(float regen)

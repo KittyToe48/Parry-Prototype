@@ -5,6 +5,7 @@ using UnityEngine.SocialPlatforms;
 
 public class CameraController : MonoBehaviour
 {
+    // Daniels verk
     Vector2 _axis = new Vector2(1,1);
 
     [Header("Camera Settings")]

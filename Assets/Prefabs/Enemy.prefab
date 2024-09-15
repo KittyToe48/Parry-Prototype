@@ -196,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _immortal: 0
+  _timeInvincible: 0.5
   _healthText: {fileID: 0}
   _maxHealth: 30
 --- !u!195 &6027813573962221865

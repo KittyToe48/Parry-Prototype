@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Daniels verk
     [SerializeField] Rigidbody _body;
 
     float _horizontalInput;

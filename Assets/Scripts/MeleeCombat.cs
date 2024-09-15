@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MeleeCombat : MonoBehaviour
 {
+    PunchDamage _damage;
+
+    int _punchCheck = 0;
+
     public bool ParryState = false;
     public bool GuardState = false;
     public bool Stunned = false;
@@ -13,31 +17,49 @@ public class MeleeCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _animator = GetComponent<Animator>();
-        
+        _damage = GetComponent<PunchDamage>();
+        _animator = GetComponent<Animator>(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-            if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") Punch();
+        if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") PunchUp();
+        if (Input.GetMouseButtonUp(0) && gameObject.tag == "Player") PunchDown();
         if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") GuardUp();
         if (Input.GetMouseButtonUp(1) && gameObject.tag == "Player") GuardDown();
     }
 
-    public void Punch()
+    public void PunchUp()
     {
-        if (!ParryState &&  !GuardState) _animator.SetTrigger("Punch Trigger");
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) _animator.SetTrigger("Punch Up");
+    }
+
+    void PunchCheck()
+    {
+        _punchCheck++;
+        Debug.Log(_punchCheck);
+        if (_punchCheck == 3)
+        {
+            _animator.SetTrigger("Punch Down");
+            _punchCheck = 0;
+        }
+    }
+
+    public void PunchDown()
+    {
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) _animator.SetTrigger("Punch Down");
+        _punchCheck = 0;
     }
 
     public void GuardUp()
     {
-        _animator.SetTrigger("Up Trigger");
+        _animator.SetTrigger("Guard Up");
     }
 
     public void GuardDown()
     {
-        _animator.SetTrigger("Down Trigger");
+        _animator.SetTrigger("Guard Down");
     }
 
     public IEnumerator StunnedTimer() //Gör om till coroutine

@@ -60,7 +60,7 @@ public class ChaserAI : MonoBehaviour
             attackCooldown -= Time.deltaTime;
             if (attackCooldown <= 0)
             {
-                _combat.Punch();
+                _combat.PunchUp();
                 _meshRenderer.material = _materials[2];
                 yield return new WaitForSeconds(_punchClip.length);
                 _attacking = false;

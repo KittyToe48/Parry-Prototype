@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PunchDamage : MonoBehaviour
 {
-    [SerializeField] float _damage;
+    public float Damage;
 
     // Start is called before the first frame update
     void Start()
@@ -27,13 +27,13 @@ public class PunchDamage : MonoBehaviour
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player")
         {
             MeleeCombat combat = other.gameObject.transform.GetChild(0).GetComponent<MeleeCombat>();
-            if (combat.GuardState) health.TakeDamage(_damage / 2);
+            if (combat.GuardState) health.TakeDamage(Damage / 2);
             else if (combat.ParryState)
             {
                 MeleeCombat stunned = transform.GetComponentInParent<MeleeCombat>();
                 StartCoroutine(stunned.StunnedTimer());
             }
-            else health.TakeDamage(_damage);
+            else health.TakeDamage(Damage);
 
         }
     }
