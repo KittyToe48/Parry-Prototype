@@ -26,7 +26,7 @@ public class MeleeCombat : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") PunchUp();
         if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") GuardUp();
-        if (Input.GetMouseButtonUp(1) && gameObject.tag == "Player") GuardDown();
+        //if (Input.GetMouseButtonUp(1) && gameObject.tag == "Player") GuardDown();
     }
 
     public void PunchUp()

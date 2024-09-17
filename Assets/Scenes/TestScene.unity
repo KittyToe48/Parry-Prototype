@@ -1952,7 +1952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f444eb23d0c753641b35467c23dfc7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _immortal: 0
+  _immortal: 1
   _timeInvincible: 0.5
   _healthText: {fileID: 1632788496}
   _maxHealth: 30
@@ -2127,6 +2127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 10
+  DamageMultiplier: 1
 --- !u!4 &4699168343867775341
 Transform:
   m_ObjectHideFlags: 0
