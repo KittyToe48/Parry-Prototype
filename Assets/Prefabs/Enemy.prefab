@@ -198,7 +198,7 @@ MonoBehaviour:
   _immortal: 0
   _timeInvincible: 0.5
   _healthText: {fileID: 0}
-  _maxHealth: 30
+  _maxHealth: 60
 --- !u!195 &6027813573962221865
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -545,4 +545,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b9cf63a844764488ada1ffc7323634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 10
+  Damage: 10
+  DamageMultiplier: 1

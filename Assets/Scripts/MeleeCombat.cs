@@ -17,7 +17,7 @@ public class MeleeCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _damage = GetComponent<PunchDamage>();
+        _damage = transform.GetChild(0).GetComponent<PunchDamage>();
         _animator = GetComponent<Animator>(); 
     }
 
@@ -25,22 +25,25 @@ public class MeleeCombat : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") PunchUp();
-        if (Input.GetMouseButtonUp(0) && gameObject.tag == "Player") PunchDown();
         if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") GuardUp();
         if (Input.GetMouseButtonUp(1) && gameObject.tag == "Player") GuardDown();
     }
 
     public void PunchUp()
     {
+        _punchCheck = 0;
+        _damage.DamageMultiplier = 1;
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) _animator.SetTrigger("Punch Up");
     }
 
     void PunchCheck()
     {
+        if (gameObject.tag == "Enemy") _animator.SetTrigger("Punch Down");
         _punchCheck++;
         Debug.Log(_punchCheck);
         if (_punchCheck == 3)
         {
+            _damage.DamageMultiplier = 2;
             _animator.SetTrigger("Punch Down");
             _punchCheck = 0;
         }
@@ -48,7 +51,8 @@ public class MeleeCombat : MonoBehaviour
 
     public void PunchDown()
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) _animator.SetTrigger("Punch Down");
+        //_animator.SetBool("Punch Down", true);
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) _animator.SetBool("Punch Down", false);
         _punchCheck = 0;
     }
 
