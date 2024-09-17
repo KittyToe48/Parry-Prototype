@@ -40,7 +40,7 @@ public class ChaserAI : MonoBehaviour
     void Chase() // Distance eller psyhics.checksphere?
     {
         _agent.SetDestination(_player.transform.position);
-        transform.LookAt(new Vector3(_player.transform.position.x, transform.position.y, _player.transform.position.z));
+        //transform.LookAt(new Vector3(_player.transform.position.x, transform.position.y, _player.transform.position.z));
 
         if (Vector3.Distance(transform.position, _agent.destination) <= 5 && !_attacking)
         {

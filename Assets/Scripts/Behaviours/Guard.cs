@@ -16,7 +16,7 @@ public class Guard : StateMachineBehaviour
         if (!Input.GetMouseButton(1))
         {
             animator.SetTrigger("Guard Down");
-            Debug.Log("Hallo");
+            //Debug.Log("Hallo");
         }
     }
 

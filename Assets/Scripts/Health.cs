@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    // Vides verk
+    AudioSource _audioSource;
+    [SerializeField] AudioClip _damageSound;
+
     [SerializeField] bool _immortal;
     bool _invincible = false;
     [SerializeField] float _timeInvincible;
@@ -19,6 +21,8 @@ public class Health : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
+
         _health = _maxHealth;
         if (gameObject.tag == "Player")
         {
@@ -35,6 +39,8 @@ public class Health : MonoBehaviour
     {
         if (!_immortal && !_invincible)
         {
+            _audioSource.clip = _damageSound;
+            _audioSource.Play();
             _health -= damage;
             if (gameObject.tag == "Player")
             {

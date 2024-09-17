@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f444eb23d0c753641b35467c23dfc7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
   _immortal: 0
   _timeInvincible: 0.5
   _healthText: {fileID: 0}
