@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] GameObject _hitText;
+
     AudioSource _audioSource;
     [SerializeField] AudioClip _damageSound;
 
@@ -42,9 +44,16 @@ public class Health : MonoBehaviour
             _audioSource.clip = _damageSound;
             _audioSource.Play();
             _health -= damage;
+
             if (gameObject.tag == "Player")
             {
+                
                 _healthText.text = _health.ToString() + " / " + _maxHealth;
+            }
+            else
+            {
+                GameObject hitText = Instantiate(_hitText, transform.position + transform.forward * 2f, transform.rotation);
+                hitText.GetComponent<HitNumber>().Damage = damage;
             }
             if (_health <= 0)
             {

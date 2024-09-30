@@ -196,6 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f444eb23d0c753641b35467c23dfc7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hitText: {fileID: 2293057750349726352, guid: 43c31339a6ce115468bfeb483edbe9dc, type: 3}
   _damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
   _immortal: 0
   _timeInvincible: 0.25
@@ -646,7 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 10
   DamageMultiplier: 1
-  _parrySound: {fileID: 0}
+  _parrySound: {fileID: 8300000, guid: 4c7545b294bc0ba4b8ee7f3b9ac28d98, type: 3}
   _hitSound: {fileID: 8300000, guid: fcb402599d609c447adcde2536434ae9, type: 3}
 --- !u!82 &7266455816616793750
 AudioSource:
