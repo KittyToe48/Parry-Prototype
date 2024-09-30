@@ -52,7 +52,7 @@ public class Health : MonoBehaviour
             }
             else
             {
-                GameObject hitText = Instantiate(_hitText, transform.position + transform.forward * 2f, transform.rotation);
+                GameObject hitText = Instantiate(_hitText, transform.position + (transform.up * 1.5f + transform.right * Random.Range(-0.7f, 0.7f)), transform.rotation);
                 hitText.GetComponent<HitNumber>().Damage = damage;
             }
             if (_health <= 0)
