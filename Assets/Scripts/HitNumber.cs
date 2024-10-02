@@ -18,7 +18,7 @@ public class HitNumber : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
         _damageText = GetComponent<TextMeshPro>();
         _damageText.text = Damage.ToString();
-        Debug.Log("I exist:" + Damage);
+        //Debug.Log("I exist:" + Damage);
     }
 
     // Update is called once per frame

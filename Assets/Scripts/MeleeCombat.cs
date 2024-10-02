@@ -39,7 +39,7 @@ public class MeleeCombat : MonoBehaviour
     {
         if (gameObject.tag == "Enemy") _animator.SetTrigger("Punch Down");
         _punchCheck++;
-        Debug.Log(_punchCheck);
+        //Debug.Log(_punchCheck);
         if (_punchCheck == 3)
         {
             _damage.DamageMultiplier = 2;
@@ -65,17 +65,17 @@ public class MeleeCombat : MonoBehaviour
         _animator.SetTrigger("Guard Down");
     }
 
-    public IEnumerator StunnedTimer() //Gör om till coroutine
+    public IEnumerator StunnedTimer(float timer) 
     {
         Debug.Log("Arggh I am stunned: " + gameObject.tag);
         Stunned = true;
         if (gameObject.tag == "Player")
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(timer);
         }
         else if (gameObject.tag == "Enemy")
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(timer);
         }
         Stunned = false;
     }

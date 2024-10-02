@@ -177,7 +177,7 @@ MonoBehaviour:
   _immortal: 0
   _timeInvincible: 0.5
   _healthText: {fileID: 0}
-  _maxHealth: 30
+  _maxHealth: 200
 --- !u!82 &-6089671208186960696
 AudioSource:
   m_ObjectHideFlags: 0

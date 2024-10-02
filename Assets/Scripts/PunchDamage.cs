@@ -25,25 +25,34 @@ public class PunchDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Health health = other.gameObject.GetComponent<Health>();
-        
-        Debug.Log("Yeouch + " + other.gameObject.gameObject.name);
+        //Debug.Log("Yeouch + " + other.gameObject.gameObject.name);
 
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player")
         {
             _audioSource.clip = _hitSound;
             _audioSource.Play();
             MeleeCombat combat = other.gameObject.transform.GetChild(0).GetComponent<MeleeCombat>();
-            if (combat.GuardState) health.TakeDamage((Damage * DamageMultiplier) / 2);
+            if (combat == null) combat = other.gameObject.GetComponent<MeleeCombat>();
+            if (combat.GuardState)
+            {
+                Health health = transform.GetComponentInParent<Health>();
+                health.TakeDamage((Damage * DamageMultiplier) / 2);
+                MeleeCombat stunned = transform.GetComponentInParent<MeleeCombat>();
+                StartCoroutine(stunned.StunnedTimer(0.5f));
+            }
             else if (combat.ParryState)
             {
                 _audioSource.clip = _parrySound;
                 _audioSource.Play();
                 MeleeCombat stunned = transform.GetComponentInParent<MeleeCombat>();
-                StartCoroutine(stunned.StunnedTimer());
+                StartCoroutine(stunned.StunnedTimer(2f));
             }
-            else health.TakeDamage(Damage * DamageMultiplier);
-            Debug.Log("Damage: " + Damage * DamageMultiplier);
+            else
+            {
+                Health health = other.gameObject.GetComponent<Health>();
+                health.TakeDamage(Damage * DamageMultiplier);
+            }
+            //Debug.Log("Damage: " + Damage * DamageMultiplier);
 
         }
     }
