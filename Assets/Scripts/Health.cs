@@ -50,8 +50,9 @@ public class Health : MonoBehaviour
                 
                 _healthText.text = _health.ToString() + " / " + _maxHealth;
             }
-            else
+            else // Om fienden tar skada. 
             {
+                // GÖr så att de blir aware av spelaren om de tar skada och blir stunned om de tar för mycket skada på en gång.
                 GameObject hitText = Instantiate(_hitText, transform.position + (transform.up * 1.5f + transform.right * Random.Range(-0.7f, 0.7f)), transform.rotation);
                 hitText.GetComponent<HitNumber>().Damage = damage;
             }

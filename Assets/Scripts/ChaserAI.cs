@@ -20,6 +20,7 @@ public class ChaserAI : MonoBehaviour
     EnemyVision enemyVision;
 
     bool attacking = false;
+    public bool AwareOfPlayer = false;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,7 @@ public class ChaserAI : MonoBehaviour
     { 
         if (!combat.Stunned)
         {
+            AwareOfPlayer = true;
             agent.SetDestination(player.transform.position);
             //transform.LookAt(new Vector3(_player.transform.position.x, transform.position.y, _player.transform.position.z));
 
@@ -93,6 +95,7 @@ public class ChaserAI : MonoBehaviour
                         break;
                     }
                 }
+                else if (enemyVision.CanSeePlayer) break;
                 yield return null;
             }
         }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PunchDamage : MonoBehaviour
@@ -20,7 +18,7 @@ public class PunchDamage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,6 +47,11 @@ public class PunchDamage : MonoBehaviour
             }
             else
             {
+                if (other.gameObject.tag == "Enemy")
+                {
+                    ChaserAI enemyAI = other.gameObject.GetComponent<ChaserAI>();
+                    if (enemyAI != null) if (!enemyAI.AwareOfPlayer) DamageMultiplier += 1;
+                }
                 Health health = other.gameObject.GetComponent<Health>();
                 health.TakeDamage(Damage * DamageMultiplier);
             }
