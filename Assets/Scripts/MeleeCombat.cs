@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class MeleeCombat : MonoBehaviour
 {
-    PunchDamage _damage;
+    PunchDamage damage;
 
-    int _punchCheck = 0;
+    int punchCheck = 0;
 
     public bool ParryState = false;
     public bool GuardState = false;
     public bool Stunned = false;
 
-    Animator _animator;
+    ChaserAI enemyAI;
+
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
-        _damage = transform.GetChild(0).GetComponent<PunchDamage>();
-        _animator = GetComponent<Animator>(); 
+        enemyAI = transform.GetComponentInParent<ChaserAI>();
+
+        damage = transform.GetChild(0).GetComponent<PunchDamage>();
+        animator = GetComponent<Animator>(); 
     }
 
     // Update is called once per frame
@@ -30,55 +34,61 @@ public class MeleeCombat : MonoBehaviour
 
     public void PunchUp()
     {
-        _punchCheck = 0;
-        _damage.DamageMultiplier = 1;
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) _animator.SetTrigger("Punch Up");
+        punchCheck = 0;
+        damage.DamageMultiplier = 1;
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.SetTrigger("Punch Up");
     }
 
     void PunchCheck()
     {
-        if (gameObject.tag == "Enemy") _animator.SetTrigger("Punch Down");
-        _punchCheck++;
+        if (gameObject.tag == "Enemy") animator.SetTrigger("Punch Down");
+        punchCheck++;
         //Debug.Log(_punchCheck);
-        if (_punchCheck == 3)
+        if (punchCheck == 3)
         {
-            _damage.DamageMultiplier = 2;
-            _animator.SetTrigger("Punch Down");
-            _punchCheck = 0;
+            damage.DamageMultiplier = 2;
+            animator.SetTrigger("Punch Down");
+            punchCheck = 0;
         }
     }
 
     public void PunchDown()
     {
-        //_animator.SetBool("Punch Down", true);
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) _animator.SetBool("Punch Down", false);
-        _punchCheck = 0;
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.SetBool("Punch Down", false);
+        punchCheck = 0;
     }
 
     public void GuardUp()
     {
-        _animator.SetTrigger("Guard Up");
+        animator.SetTrigger("Guard Up");
     }
 
     public void GuardDown()
     {
-        _animator.SetTrigger("Guard Down");
+        animator.SetTrigger("Guard Down");
     }
 
     public IEnumerator StunnedTimer(float timer) 
     {
-        Debug.Log("Arggh I am stunned: " + gameObject.tag);
-        Stunned = true;
-        if (gameObject.tag == "Player")
+        if (!Stunned)
         {
-            yield return new WaitForSeconds(timer);
+            Stunned = true;
+            Debug.Log("Arggh I am stunned: " + gameObject.tag);
+
+            if (gameObject.tag == "Player")
+            {
+                yield return new WaitForSeconds(timer);
+            }
+            else if (gameObject.tag == "Enemy")
+            {
+                yield return new WaitForSeconds(timer);
+                StartCoroutine(enemyAI.StunnedSearch());
+            }
+            Stunned = false;
         }
-        else if (gameObject.tag == "Enemy")
-        {
-            yield return new WaitForSeconds(timer);
-        }
-        Stunned = false;
     }
+
+
 
     //public IEnumerator Punch(float punchTimer)
     //{

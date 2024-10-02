@@ -5,72 +5,122 @@ using UnityEngine.AI;
 
 public class ChaserAI : MonoBehaviour
 {
-    [SerializeField] Material[] _materials;
-    MeshRenderer _meshRenderer;
+    [SerializeField] Material[] materials;
+    MeshRenderer meshRenderer;
 
-    [SerializeField] float _attackCooldown;
+    [SerializeField] float attackCooldown;
 
-    [SerializeField] AnimationClip _punchClip;
+    [SerializeField] AnimationClip punchClip;
 
-    NavMeshAgent _agent;
+    NavMeshAgent agent;
 
-    GameObject _player;
+    GameObject player;
 
-    MeleeCombat _combat;
+    MeleeCombat combat;
+    EnemyVision enemyVision;
 
-    bool _attacking = false;
+    bool attacking = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponent<MeshRenderer>();
 
-        _player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
 
-        _combat = transform.GetChild(0).GetComponent<MeleeCombat>();
-        _agent = GetComponent<NavMeshAgent>();
+        combat = transform.GetChild(0).GetComponent<MeleeCombat>();
+        enemyVision = GetComponent<EnemyVision>();
+
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!_combat.Stunned) Chase();
-    }
-
-    void Chase() // Distance eller psyhics.checksphere?
-    {
-        _agent.SetDestination(_player.transform.position);
-        //transform.LookAt(new Vector3(_player.transform.position.x, transform.position.y, _player.transform.position.z));
-
-        if (Vector3.Distance(transform.position, _agent.destination) <= 5 && !_attacking)
+    public void Chase()
+    { 
+        if (!combat.Stunned)
         {
-            StartCoroutine(Attack());
+            agent.SetDestination(player.transform.position);
+            //transform.LookAt(new Vector3(_player.transform.position.x, transform.position.y, _player.transform.position.z));
+
+            if (Vector3.Distance(transform.position, agent.destination) <= 5 && !attacking)
+            {
+                StartCoroutine(Attack());
+            }
+        }
+        else enemyVision.CanSeePlayer = false;
+    }
+
+    public void LostPlayer()
+    {
+        agent.SetDestination(player.transform.position);
+    }
+
+    public IEnumerator StunnedSearch()
+    {
+        if (!enemyVision.CanSeePlayer)
+        {
+            int turns = 0;
+            float turnsPerSecond = 100;
+            float turnSpeed = turnsPerSecond;
+            float turnTimer = 180 / turnsPerSecond;
+
+            while (true)
+            {
+                transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed);
+                turnTimer -= Time.deltaTime;
+
+                if (turnTimer <= 0) //När tiden på timerTurn har tagit slut kommer den att vända riktning
+                {
+                    turns++;
+                    if (turns == 1)
+                    {
+                        turnsPerSecond = 200;
+                        turnTimer = 360 / turnsPerSecond;
+                        turnsPerSecond = -turnsPerSecond;
+                        turnSpeed = turnsPerSecond;
+                        Debug.Log("Turning1: " + turns + ", " + turnTimer);
+                        yield return null;
+                    }
+                    else if (turns == 2)
+                    {
+                        turnsPerSecond = 110;
+                        turnSpeed = turnsPerSecond;
+                        turnTimer = 180 / turnsPerSecond;
+                        Debug.Log("Turning2: " + turns + ", " + turnTimer);
+                        yield return null;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                yield return null;
+            }
         }
     }
 
     IEnumerator Attack()
     {
-        _attacking = true;
+        attacking = true;
         //Debug.Log("Let me introduce you to the NEW JOCKER!");
-        float attackCooldown = _attackCooldown;
-        _meshRenderer.material = _materials[1];
+        float attackCooldown = this.attackCooldown;
+        meshRenderer.material = materials[1];
         while(true)
         {
             yield return null;
             attackCooldown -= Time.deltaTime;
             if (attackCooldown <= 0)
             {
-                _combat.PunchUp();
-                _meshRenderer.material = _materials[2];
-                yield return new WaitForSeconds(_punchClip.length);
-                _attacking = false;
-                _meshRenderer.material = _materials[0];
+                combat.PunchUp();
+                meshRenderer.material = materials[2];
+                yield return new WaitForSeconds(punchClip.length);
+                attacking = false;
+                meshRenderer.material = materials[0];
                 break;
             }
-            else if (_combat.Stunned)
+            else if (combat.Stunned)
             {
-                _attacking = false;
-                _meshRenderer.material = _materials[0];
+                attacking = false;
+                meshRenderer.material = materials[0];
                 break;
             }
         }
