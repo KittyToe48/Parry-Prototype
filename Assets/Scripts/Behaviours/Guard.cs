@@ -13,7 +13,7 @@ public class Guard : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!Input.GetMouseButton(1))
+        if (!Input.GetKey(KeyCode.R))
         {
             animator.SetTrigger("Guard Down");
             //Debug.Log("Hallo");

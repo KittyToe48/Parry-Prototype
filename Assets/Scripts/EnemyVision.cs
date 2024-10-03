@@ -62,7 +62,7 @@ public class EnemyVision : MonoBehaviour
                 else
                 {
                     //Debug.Log("2");
-                    CanSeePlayer = false;
+                    if (CanSeePlayer) StartCoroutine(enemyAI.Search(1));
                 }
             }
             else

@@ -5,14 +5,16 @@ using UnityEngine.AI;
 
 public class ChaserAI : MonoBehaviour
 {
+    [SerializeField] bool _dummy;
+
     public bool Stunned = false;
 
     public Material[] Materials;
     [HideInInspector] public MeshRenderer MeshRenderer;
 
-    [SerializeField] float attackCooldown;
+    [SerializeField] float _attackCooldown;
 
-    [SerializeField] AnimationClip punchClip;
+    [SerializeField] AnimationClip _punchClip;
 
     NavMeshAgent agent;
 
@@ -39,7 +41,7 @@ public class ChaserAI : MonoBehaviour
 
     public void Chase()
     { 
-        if (!Stunned) // Jagar spelaren om de inte är stunned
+        if (!Stunned && !_dummy) // Jagar spelaren om de inte är stunned
         {
             AwareOfPlayer = true;
             agent.SetDestination(player.transform.position);
@@ -66,10 +68,10 @@ public class ChaserAI : MonoBehaviour
 
             if (enemyVision.CanSeePlayer)
             {
-                Debug.Log("Saw you");
+                //Debug.Log("Saw you");
                 break;
             }
-            Debug.Log("Yerp: " + timer);
+            //Debug.Log("Yerp: " + timer);
             yield return null;
         }
     }
@@ -123,7 +125,7 @@ public class ChaserAI : MonoBehaviour
     {
         attacking = true;
         //Debug.Log("Let me introduce you to the NEW JOCKER!");
-        float attackCooldown = this.attackCooldown;
+        float attackCooldown = this._attackCooldown;
         MeshRenderer.material = Materials[1];
         while(true)
         {
@@ -133,7 +135,7 @@ public class ChaserAI : MonoBehaviour
             {
                 combat.PunchUp();
                 MeshRenderer.material = Materials[2];
-                yield return new WaitForSeconds(punchClip.length);
+                yield return new WaitForSeconds(_punchClip.length);
                 attacking = false;
                 if (!Stunned) MeshRenderer.material = Materials[0];
                 break;

@@ -8,19 +8,19 @@ public class Health : MonoBehaviour
 {
     ChaserAI enemyAI;
 
-    [SerializeField] GameObject hitText;
+    [SerializeField] GameObject _hitText;
 
     AudioSource audioSource;
-    [SerializeField] AudioClip damageSound;
+    [SerializeField] AudioClip _damageSound;
 
-    [SerializeField] bool immortal;
+    [SerializeField] bool _immortal;
     bool invincible = false;
-    [SerializeField] float timeInvincible;
+    [SerializeField] float _timeInvincible;
 
-    [SerializeField] TextMeshProUGUI healthText;
+    [SerializeField] TextMeshProUGUI _healthText;
     //[SerializeField] TextMeshProUGUI _scoreText;
     float health;
-    [SerializeField] float maxHealth;
+    [SerializeField] float _maxHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -29,10 +29,10 @@ public class Health : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
 
-        health = maxHealth;
+        health = _maxHealth;
         if (gameObject.tag == "Player")
         {
-            healthText.text = health.ToString() + " / " + maxHealth;
+            _healthText.text = health.ToString() + " / " + _maxHealth;
         }
     }
 
@@ -43,23 +43,23 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (!immortal && !invincible)
+        if (!_immortal && !invincible)
         {
-            audioSource.clip = damageSound;
+            audioSource.clip = _damageSound;
             audioSource.Play();
             health -= damage;
 
             if (gameObject.tag == "Player")
             {
                 
-                healthText.text = health.ToString() + " / " + maxHealth;
+                _healthText.text = health.ToString() + " / " + _maxHealth;
             }
             else // Om fienden tar skada. 
             {
                 enemyAI.AwareOfPlayer = true;
                 StartCoroutine(enemyAI.Search(1));
-                if ((maxHealth / damage) > (maxHealth / 2)) StartCoroutine(enemyAI.StunnedTimer(1.5f));
-                GameObject hitTextObject = Instantiate(hitText, transform.position + (transform.up * 1.5f + transform.right * Random.Range(-0.7f, 0.7f)), transform.rotation);
+                if ((_maxHealth / damage) > (_maxHealth / 2)) StartCoroutine(enemyAI.StunnedTimer(1.5f));
+                GameObject hitTextObject = Instantiate(_hitText, transform.position + (transform.up * 1.5f + transform.right * Random.Range(-0.7f, 0.7f)), transform.rotation);
                 hitTextObject.GetComponent<HitNumber>().Damage = damage;
             }
             if (health <= 0)
@@ -73,7 +73,7 @@ public class Health : MonoBehaviour
     IEnumerator Invinsibility()
     {
         invincible = true;
-        yield return new WaitForSeconds(timeInvincible);
+        yield return new WaitForSeconds(_timeInvincible);
         invincible = false;
     }
 
@@ -81,9 +81,9 @@ public class Health : MonoBehaviour
     {
         health += regen;
 
-        if (health > maxHealth)
+        if (health > _maxHealth)
         {
-            health = maxHealth;
+            health = _maxHealth;
         }
         //_healthText.text = _health.ToString() + " / " + _maxHealth;
     }

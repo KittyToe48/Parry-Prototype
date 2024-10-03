@@ -29,14 +29,22 @@ public class MeleeCombat : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") PunchUp();
-        if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") GuardUp();
+        if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") HeavyPunchUp();
+        if (Input.GetKeyDown(KeyCode.R) && gameObject.tag == "Player") GuardUp();
     }
 
     public void PunchUp()
     {
         punchCheck = 0;
         damage.DamageMultiplier = 1;
+        damage.Damage = 10;
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.SetTrigger("Punch Up");
+    }
+
+    void HeavyPunchUp()
+    {
+        damage.Damage = 45;
+        animator.SetTrigger("Heavy Up");
     }
 
     void PunchCheck()
