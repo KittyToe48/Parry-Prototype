@@ -35,16 +35,22 @@ public class MeleeCombat : MonoBehaviour
 
     public void PunchUp()
     {
-        punchCheck = 0;
-        damage.DamageMultiplier = 1;
-        damage.Damage = 10;
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.SetTrigger("Punch Up");
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            animator.SetTrigger("Punch Up");
+            punchCheck = 0;
+            damage.DamageMultiplier = 1;
+            damage.Damage = 10;
+        }
     }
 
     void HeavyPunchUp()
     {
-        damage.Damage = 45;
-        animator.SetTrigger("Heavy Up");
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            damage.Damage = 45;
+            animator.SetTrigger("Heavy Up");
+        }
     }
 
     void PunchCheck()
