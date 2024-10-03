@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class ChaserAI : MonoBehaviour
 {
+    public bool Stunned = false;
+
     public Material[] Materials;
     [HideInInspector] public MeshRenderer MeshRenderer;
 
@@ -37,7 +39,7 @@ public class ChaserAI : MonoBehaviour
 
     public void Chase()
     { 
-        if (!combat.Stunned) // Jagar spelaren om de inte är stunned
+        if (!Stunned) // Jagar spelaren om de inte är stunned
         {
             AwareOfPlayer = true;
             agent.SetDestination(player.transform.position);
@@ -71,12 +73,6 @@ public class ChaserAI : MonoBehaviour
             yield return null;
         }
     }
-
-    //public void LostPlayer()
-    //{
-    //    Debug.Log("Lost player");
-    //    agent.SetDestination(player.transform.position);
-    //}
 
     public IEnumerator LostPlayer(float multiplier)
     {
@@ -139,15 +135,31 @@ public class ChaserAI : MonoBehaviour
                 MeshRenderer.material = Materials[2];
                 yield return new WaitForSeconds(punchClip.length);
                 attacking = false;
-                MeshRenderer.material = Materials[0];
+                if (!Stunned) MeshRenderer.material = Materials[0];
                 break;
             }
-            else if (combat.Stunned)
+            else if (Stunned)
             {
                 attacking = false;
                 MeshRenderer.material = Materials[0];
                 break;
             }
+        }
+    }
+
+    public IEnumerator StunnedTimer(float timer)
+    {
+        if (!Stunned)
+        {
+            Stunned = true;
+            MeshRenderer.material = Materials[3];
+            Debug.Log("Arggh I am stunned: " + gameObject.tag);
+
+                yield return new WaitForSeconds(timer);
+                StartCoroutine(LostPlayer(1));
+            
+            Stunned = false;
+            MeshRenderer.material = Materials[0];
         }
     }
 }

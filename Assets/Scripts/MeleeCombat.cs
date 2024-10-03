@@ -11,7 +11,6 @@ public class MeleeCombat : MonoBehaviour
 
     public bool ParryState = false;
     public bool GuardState = false;
-    public bool Stunned = false;
 
     ChaserAI enemyAI;
 
@@ -68,30 +67,6 @@ public class MeleeCombat : MonoBehaviour
     {
         animator.SetTrigger("Guard Down");
     }
-
-    public IEnumerator StunnedTimer(float timer) 
-    {
-        if (!Stunned)
-        {
-            Stunned = true;
-            enemyAI.MeshRenderer.material = enemyAI.Materials[3];
-            Debug.Log("Arggh I am stunned: " + gameObject.tag);
-
-            if (gameObject.tag == "Player")
-            {
-                yield return new WaitForSeconds(timer);
-            }
-            else if (gameObject.tag == "Enemy")
-            {
-                yield return new WaitForSeconds(timer);
-                StartCoroutine(enemyAI.LostPlayer(1));
-            }
-            Stunned = false;
-            enemyAI.MeshRenderer.material = enemyAI.Materials[0];
-        }
-    }
-
-
 
     //public IEnumerator Punch(float punchTimer)
     //{

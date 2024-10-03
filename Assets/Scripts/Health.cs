@@ -6,29 +6,33 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] GameObject _hitText;
+    ChaserAI enemyAI;
 
-    AudioSource _audioSource;
-    [SerializeField] AudioClip _damageSound;
+    [SerializeField] GameObject hitText;
 
-    [SerializeField] bool _immortal;
-    bool _invincible = false;
-    [SerializeField] float _timeInvincible;
+    AudioSource audioSource;
+    [SerializeField] AudioClip damageSound;
 
-    [SerializeField] TextMeshProUGUI _healthText;
+    [SerializeField] bool immortal;
+    bool invincible = false;
+    [SerializeField] float timeInvincible;
+
+    [SerializeField] TextMeshProUGUI healthText;
     //[SerializeField] TextMeshProUGUI _scoreText;
-    float _health;
-    [SerializeField] float _maxHealth;
+    float health;
+    [SerializeField] float maxHealth;
 
     // Start is called before the first frame update
     void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
+        enemyAI = GetComponent<ChaserAI>();
 
-        _health = _maxHealth;
+        audioSource = GetComponent<AudioSource>();
+
+        health = maxHealth;
         if (gameObject.tag == "Player")
         {
-            _healthText.text = _health.ToString() + " / " + _maxHealth;
+            healthText.text = health.ToString() + " / " + maxHealth;
         }
     }
 
@@ -39,24 +43,26 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (!_immortal && !_invincible)
+        if (!immortal && !invincible)
         {
-            _audioSource.clip = _damageSound;
-            _audioSource.Play();
-            _health -= damage;
+            audioSource.clip = damageSound;
+            audioSource.Play();
+            health -= damage;
 
             if (gameObject.tag == "Player")
             {
                 
-                _healthText.text = _health.ToString() + " / " + _maxHealth;
+                healthText.text = health.ToString() + " / " + maxHealth;
             }
             else // Om fienden tar skada. 
             {
-                // GÖr så att de blir aware av spelaren om de tar skada och blir stunned om de tar för mycket skada på en gång.
-                GameObject hitText = Instantiate(_hitText, transform.position + (transform.up * 1.5f + transform.right * Random.Range(-0.7f, 0.7f)), transform.rotation);
-                hitText.GetComponent<HitNumber>().Damage = damage;
+                enemyAI.AwareOfPlayer = true;
+                StartCoroutine(enemyAI.Search(1));
+                if ((maxHealth / damage) > (maxHealth / 2)) StartCoroutine(enemyAI.StunnedTimer(1.5f));
+                GameObject hitTextObject = Instantiate(hitText, transform.position + (transform.up * 1.5f + transform.right * Random.Range(-0.7f, 0.7f)), transform.rotation);
+                hitTextObject.GetComponent<HitNumber>().Damage = damage;
             }
-            if (_health <= 0)
+            if (health <= 0)
             {
                 Death();
             }
@@ -66,18 +72,18 @@ public class Health : MonoBehaviour
 
     IEnumerator Invinsibility()
     {
-        _invincible = true;
-        yield return new WaitForSeconds(_timeInvincible);
-        _invincible = false;
+        invincible = true;
+        yield return new WaitForSeconds(timeInvincible);
+        invincible = false;
     }
 
     public void TakeHealth(float regen)
     {
-        _health += regen;
+        health += regen;
 
-        if (_health > _maxHealth)
+        if (health > maxHealth)
         {
-            _health = _maxHealth;
+            health = maxHealth;
         }
         //_healthText.text = _health.ToString() + " / " + _maxHealth;
     }

@@ -1263,7 +1263,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParryState: 0
   GuardState: 0
-  Stunned: 0
 --- !u!65 &1013848093
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1961,12 +1960,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f444eb23d0c753641b35467c23dfc7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitText: {fileID: 0}
-  _damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
-  _immortal: 1
-  _timeInvincible: 0.5
-  _healthText: {fileID: 1632788496}
-  _maxHealth: 30
+  hitText: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
+  immortal: 1
+  timeInvincible: 0.4
+  healthText: {fileID: 1632788496}
+  maxHealth: 30
 --- !u!82 &1907106243
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2548,7 +2547,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParryState: 0
   GuardState: 0
-  Stunned: 0
 --- !u!4 &4699168343867775341
 Transform:
   m_ObjectHideFlags: 0
@@ -2576,6 +2574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fda73f04fd566be478794284940e92d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stunned: 0
   Materials:
   - {fileID: 2100000, guid: c008695b85a69914b8b15d900f1bb165, type: 2}
   - {fileID: 2100000, guid: ad6532e6d9af13142abe72887eabecbd, type: 2}
@@ -2916,12 +2915,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f444eb23d0c753641b35467c23dfc7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitText: {fileID: 2293057750349726352, guid: 43c31339a6ce115468bfeb483edbe9dc, type: 3}
-  _damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
-  _immortal: 0
-  _timeInvincible: 0.25
-  _healthText: {fileID: 0}
-  _maxHealth: 60
+  hitText: {fileID: 2293057750349726352, guid: 43c31339a6ce115468bfeb483edbe9dc, type: 3}
+  damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
+  immortal: 0
+  timeInvincible: 0.4
+  healthText: {fileID: 0}
+  maxHealth: 50
 --- !u!4 &7761578078769966652
 Transform:
   m_ObjectHideFlags: 0

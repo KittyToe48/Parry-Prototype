@@ -25,36 +25,48 @@ public class PunchDamage : MonoBehaviour
     {
         //Debug.Log("Yeouch + " + other.gameObject.gameObject.name);
 
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player") // Om något levande blir slaget
         {
             _audioSource.clip = _hitSound;
             _audioSource.Play();
+
             MeleeCombat combat = other.gameObject.transform.GetChild(0).GetComponent<MeleeCombat>();
             if (combat == null) combat = other.gameObject.GetComponent<MeleeCombat>();
-            if (combat.GuardState)
+            if (combat.GuardState) // När man blockar
             {
                 Health health = other.gameObject.GetComponent<Health>();
                 if (health == null) health = other.gameObject.GetComponentInParent<Health>();
-                health.TakeDamage((Damage * DamageMultiplier) / 2);
-                MeleeCombat stunned = transform.GetComponentInParent<MeleeCombat>();
-                StartCoroutine(stunned.StunnedTimer(0.5f));
+
+                health.TakeDamage((Damage * DamageMultiplier) / 2); // Tar halva skadan
+                ChaserAI stunned = transform.parent.transform.GetComponentInParent<ChaserAI>(); // Tar komponenten från dess parents parent, från handen till arms till fienden
+                StartCoroutine(stunned.StunnedTimer(0.5f)); // Blir stunned
             }
-            else if (combat.ParryState)
+            else if (combat.ParryState) // När man blir parried
             {
                 _audioSource.clip = _parrySound;
                 _audioSource.Play();
-                MeleeCombat stunned = transform.GetComponentInParent<MeleeCombat>();
-                StartCoroutine(stunned.StunnedTimer(2f));
+                ChaserAI stunned = transform.parent.transform.GetComponentInParent<ChaserAI>(); // Tar komponenten från dess parents parent, från handen till arms till fienden
+                StartCoroutine(stunned.StunnedTimer(2f)); // Blir stunned
             }
             else
             {
-                if (other.gameObject.tag == "Enemy")
+                if (other.gameObject.tag == "Enemy") 
                 {
                     ChaserAI enemyAI = other.gameObject.GetComponent<ChaserAI>();
-                    if (enemyAI != null) if (!enemyAI.AwareOfPlayer) DamageMultiplier += 1;
+                    if (enemyAI != null)
+                    {
+                        if (!enemyAI.AwareOfPlayer) DamageMultiplier += 1; // Om man smyger upp på en fiende som inte känner till en gör man 100% mer skada
+                        else
+                        {
+                            EnemyVision enemyVision = other.gameObject.GetComponent<EnemyVision>(); // Om man smyger upp på en fiende som känner till en gör man 50% mer skada
+                            if (!enemyVision.CanSeePlayer) DamageMultiplier += 0.5f;
+                        }
+                    }
                 }
+
                 Health health = other.gameObject.GetComponent<Health>();
                 health.TakeDamage(Damage * DamageMultiplier);
+                DamageMultiplier = 1;
             }
             //Debug.Log("Damage: " + Damage * DamageMultiplier);
 
