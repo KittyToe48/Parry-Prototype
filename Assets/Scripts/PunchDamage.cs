@@ -33,7 +33,8 @@ public class PunchDamage : MonoBehaviour
             if (combat == null) combat = other.gameObject.GetComponent<MeleeCombat>();
             if (combat.GuardState)
             {
-                Health health = transform.GetComponentInParent<Health>();
+                Health health = other.gameObject.GetComponent<Health>();
+                if (health == null) health = other.gameObject.GetComponentInParent<Health>();
                 health.TakeDamage((Damage * DamageMultiplier) / 2);
                 MeleeCombat stunned = transform.GetComponentInParent<MeleeCombat>();
                 StartCoroutine(stunned.StunnedTimer(0.5f));

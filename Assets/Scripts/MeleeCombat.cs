@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MeleeCombat : MonoBehaviour
@@ -73,6 +74,7 @@ public class MeleeCombat : MonoBehaviour
         if (!Stunned)
         {
             Stunned = true;
+            enemyAI.MeshRenderer.material = enemyAI.Materials[3];
             Debug.Log("Arggh I am stunned: " + gameObject.tag);
 
             if (gameObject.tag == "Player")
@@ -82,9 +84,10 @@ public class MeleeCombat : MonoBehaviour
             else if (gameObject.tag == "Enemy")
             {
                 yield return new WaitForSeconds(timer);
-                StartCoroutine(enemyAI.StunnedSearch());
+                StartCoroutine(enemyAI.LostPlayer(1));
             }
             Stunned = false;
+            enemyAI.MeshRenderer.material = enemyAI.Materials[0];
         }
     }
 

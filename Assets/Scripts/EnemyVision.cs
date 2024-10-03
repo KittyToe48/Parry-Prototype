@@ -55,23 +55,26 @@ public class EnemyVision : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _whatIsWall))
                 {
+                    //Debug.Log("1");
                     CanSeePlayer = true;
                     enemyAI.Chase();
                 }
                 else
                 {
+                    //Debug.Log("2");
                     CanSeePlayer = false;
                 }
             }
             else
-            {
-                CanSeePlayer = false;
+            { 
+                if (CanSeePlayer) StartCoroutine(enemyAI.Search(1));
             }
         }
         else if (CanSeePlayer)
         {
+            //Debug.Log("Hello2");
             CanSeePlayer = false;
-            enemyAI.LostPlayer();
+            StartCoroutine(enemyAI.Search(1));
         }
     }
 }

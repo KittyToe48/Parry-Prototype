@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class ChaserAI : MonoBehaviour
 {
-    [SerializeField] Material[] materials;
-    MeshRenderer meshRenderer;
+    public Material[] Materials;
+    [HideInInspector] public MeshRenderer MeshRenderer;
 
     [SerializeField] float attackCooldown;
 
@@ -25,7 +25,7 @@ public class ChaserAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        MeshRenderer = GetComponent<MeshRenderer>();
 
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -37,26 +37,48 @@ public class ChaserAI : MonoBehaviour
 
     public void Chase()
     { 
-        if (!combat.Stunned)
+        if (!combat.Stunned) // Jagar spelaren om de inte är stunned
         {
             AwareOfPlayer = true;
             agent.SetDestination(player.transform.position);
-            //transform.LookAt(new Vector3(_player.transform.position.x, transform.position.y, _player.transform.position.z));
+            
+            //if (lostPlayer) transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
 
             if (Vector3.Distance(transform.position, agent.destination) <= 5 && !attacking)
             {
                 StartCoroutine(Attack());
             }
         }
-        else enemyVision.CanSeePlayer = false;
+        else enemyVision.CanSeePlayer = false; // Kan inte se spelaren om de är stunned
     }
 
-    public void LostPlayer()
+    public IEnumerator Search(float timer)
     {
-        agent.SetDestination(player.transform.position);
+        enemyVision.CanSeePlayer = false;
+        //Debug.Log("Searching: " + enemyVision.CanSeePlayer);
+        while (timer > 0)
+        {
+            
+            timer -= Time.deltaTime;
+            Chase();
+
+            if (enemyVision.CanSeePlayer)
+            {
+                Debug.Log("Saw you");
+                break;
+            }
+            Debug.Log("Yerp: " + timer);
+            yield return null;
+        }
     }
 
-    public IEnumerator StunnedSearch()
+    //public void LostPlayer()
+    //{
+    //    Debug.Log("Lost player");
+    //    agent.SetDestination(player.transform.position);
+    //}
+
+    public IEnumerator LostPlayer(float multiplier)
     {
         if (!enemyVision.CanSeePlayer)
         {
@@ -106,7 +128,7 @@ public class ChaserAI : MonoBehaviour
         attacking = true;
         //Debug.Log("Let me introduce you to the NEW JOCKER!");
         float attackCooldown = this.attackCooldown;
-        meshRenderer.material = materials[1];
+        MeshRenderer.material = Materials[1];
         while(true)
         {
             yield return null;
@@ -114,16 +136,16 @@ public class ChaserAI : MonoBehaviour
             if (attackCooldown <= 0)
             {
                 combat.PunchUp();
-                meshRenderer.material = materials[2];
+                MeshRenderer.material = Materials[2];
                 yield return new WaitForSeconds(punchClip.length);
                 attacking = false;
-                meshRenderer.material = materials[0];
+                MeshRenderer.material = Materials[0];
                 break;
             }
             else if (combat.Stunned)
             {
                 attacking = false;
-                meshRenderer.material = materials[0];
+                MeshRenderer.material = Materials[0];
                 break;
             }
         }

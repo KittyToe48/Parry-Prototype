@@ -1,17 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
     // Daniels verk
-    [SerializeField] Rigidbody _body;
+    [SerializeField] Rigidbody rigibogy;
 
-    float _horizontalInput;
-    float _verticalInput;
+    float horizontalInput;
+    float verticalInput;
 
-    Vector2 _axis = new Vector2();
+    Vector2 axis = new Vector2();
+
+    const float acceleration = 0.7f;
+    float moveSpeed = 6.0f;
+    float sprintSpeed = 10.0f;
+
+    bool sprinting = false;
+    bool sprintingInitial = false;
+    float sprintingFOVMultiplier = 1.2f;
+    bool moving = false;
+    float targetSpeed;
+
+    float currentSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -22,64 +34,111 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+    }
+
+    private void FixedUpdate()
+    {
         Movement();
     }
 
     private void Movement()
     {
         Vector3 moveDirection;
+        SpeedControl();
 
-        if (_axis.magnitude > 1) // Förklara detta 
+        if (axis.magnitude > 1)
         {
-             moveDirection = transform.forward * _axis.normalized.y + transform.right * _axis.normalized.x;
+            moveDirection = transform.forward * axis.normalized.y + transform.right * axis.normalized.x;
         }
         else
         {
-            moveDirection = transform.forward * _axis.y + transform.right * _axis.x;
+            moveDirection = transform.forward * axis.y + transform.right * axis.x;
         }
 
-            Vector3 currentVelocity = new Vector3(_body.velocity.x, 0, _body.velocity.z);
-            Vector3 simulatedVelocity = currentVelocity + moveDirection;
-            float currentMagnitude = currentVelocity.magnitude;
-            float simulatedMagnitude = simulatedVelocity.magnitude;
+        if (moving)
+        {
+            Vector3 velocity = new Vector3(rigibogy.velocity.x, rigibogy.velocity.y, rigibogy.velocity.z);
 
-            if (currentMagnitude > 6)
+            if (rigibogy.velocity.x <= targetSpeed)
             {
-                if (simulatedMagnitude < currentMagnitude)
-                {
-                    _body.AddForce(moveDirection * 6 * 2, ForceMode.Force);
-                }
-                else
-                {
-                    Vector3 newDirection = simulatedVelocity * (currentMagnitude / simulatedMagnitude) - currentVelocity;
-
-                    _body.AddForce(newDirection * 6 * 2, ForceMode.Force);
-                }
+                velocity.x = Mathf.Lerp(rigibogy.velocity.x, moveDirection.x * targetSpeed, acceleration);
             }
-            else
+            if (rigibogy.velocity.z <= targetSpeed)
             {
-                _body.AddForce(moveDirection * 6 * 2, ForceMode.Force);
+                velocity.z = Mathf.Lerp(rigibogy.velocity.z, moveDirection.z * targetSpeed, acceleration);
             }
-        
 
-
-
-
-
-        //Vector3 velocity = new Vector3(_body.velocity.x, _body.velocity.y, _body.velocity.z); // Är inte alla noll? Vad är rigidbody velocity?
-
-        //if (_body.velocity.x <= 6) //Vad är targetspeed?
-        //{
-        //    velocity.x = Mathf.Lerp(_body.velocity.x, moveDirection.x * 6, 0.7f); // Vad menas med const acceleration? Också vad händer här lol
-        //}
-
-        //if (_body.velocity.z <= 6)
-        //{
-        //    velocity.x = Mathf.Lerp(_body.velocity.z, moveDirection.z * 6, 0.7f);
-        //}
-
-        //_body.velocity = velocity;
-
+            rigibogy.velocity = velocity;
+            currentSpeed = new Vector3(rigibogy.velocity.x, 0, rigibogy.velocity.z).magnitude;
+        }
     }
+
+    private void SpeedControl()
+    {
+        targetSpeed = moveSpeed;
+
+        if (Input.GetButton("Sprint"))
+        {
+            sprinting = true;
+        }
+        if (sprinting && axis.y > 0.8f)
+        {
+            targetSpeed = sprintSpeed;
+        }
+        else
+        {
+            sprinting = false;
+        }
+
+        if (axis.magnitude > 0.2) // This counts as a deadzone.
+        {
+            moving = true;
+        }
+        else
+        {
+            if (moving) // If the player WAS moving 
+            {
+                rigibogy.velocity = new Vector3(rigibogy.velocity.x * 0.5f, rigibogy.velocity.y, rigibogy.velocity.z * 0.5f);
+            }
+
+            moving = false;
+        }
+    }
+
+    //private void Movement()
+    //{
+    //    Vector3 moveDirection;
+
+    //    if (_axis.magnitude > 1) // Förklara detta 
+    //    {
+    //         moveDirection = transform.forward * _axis.normalized.y + transform.right * _axis.normalized.x;
+    //    }
+    //    else
+    //    {
+    //        moveDirection = transform.forward * _axis.y + transform.right * _axis.x;
+    //    }
+
+    //        Vector3 currentVelocity = new Vector3(_body.velocity.x, 0, _body.velocity.z);
+    //        Vector3 simulatedVelocity = currentVelocity + moveDirection;
+    //        float currentMagnitude = currentVelocity.magnitude;
+    //        float simulatedMagnitude = simulatedVelocity.magnitude;
+
+    //        if (currentMagnitude > 6)
+    //        {
+    //            if (simulatedMagnitude < currentMagnitude)
+    //            {
+    //                _body.AddForce(moveDirection * 6 * 2, ForceMode.Force);
+    //            }
+    //            else
+    //            {
+    //                Vector3 newDirection = simulatedVelocity * (currentMagnitude / simulatedMagnitude) - currentVelocity;
+
+    //                _body.AddForce(newDirection * 6 * 2, ForceMode.Force);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            _body.AddForce(moveDirection * 6 * 2, ForceMode.Force);
+    //        }
 }
