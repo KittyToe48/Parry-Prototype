@@ -392,6 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b76642f12fe4f94d9c232f30e3403b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noisePrefab: {fileID: 0}
   ParryState: 0
   GuardState: 0
 --- !u!1 &7399372267134283722

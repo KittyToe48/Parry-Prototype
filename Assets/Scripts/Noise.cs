@@ -33,7 +33,7 @@ public class Noise : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collided: " + other.name);
         if (other.tag == "Enemy" && Alive)
