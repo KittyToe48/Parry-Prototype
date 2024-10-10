@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class MeleeCombat : MonoBehaviour
 {
+    Noise noise;
+    [SerializeField] GameObject noisePrefab;
+
     PunchDamage damage;
 
     int punchCheck = 0;
@@ -19,6 +22,8 @@ public class MeleeCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        noise = GetComponent<Noise>();
+
         enemyAI = transform.GetComponentInParent<ChaserAI>();
 
         damage = transform.GetChild(0).GetComponent<PunchDamage>();
@@ -31,6 +36,7 @@ public class MeleeCombat : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") PunchUp();
         if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") HeavyPunchUp();
         if (Input.GetKeyDown(KeyCode.R) && gameObject.tag == "Player") GuardUp();
+        if (Input.GetKeyDown(KeyCode.J) && gameObject.tag == "Player") Whistle();
     }
 
     public void PunchUp()
@@ -41,6 +47,7 @@ public class MeleeCombat : MonoBehaviour
             punchCheck = 0;
             damage.DamageMultiplier = 1;
             damage.Damage = 10;
+            //Debug.Log("Punch Up: " + damage.Damage + ", Multiplier: " + damage.DamageMultiplier);
         }
     }
 
@@ -48,6 +55,7 @@ public class MeleeCombat : MonoBehaviour
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
+            damage.DamageMultiplier = 1;
             damage.Damage = 45;
             animator.SetTrigger("Heavy Up");
         }
@@ -82,10 +90,8 @@ public class MeleeCombat : MonoBehaviour
         animator.SetTrigger("Guard Down");
     }
 
-    //public IEnumerator Punch(float punchTimer)
-    //{
-    //_punchHitBox.enabled = true;
-    //yield return new WaitForSeconds(punchTimer);
-    //_punchHitBox.enabled = false;
-    //}
+    void Whistle()
+    {
+        noise.CreateNoise(5, 2, 10, noisePrefab, transform.position);
+    }
 }

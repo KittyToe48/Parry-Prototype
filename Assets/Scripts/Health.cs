@@ -58,7 +58,7 @@ public class Health : MonoBehaviour
             {
                 enemyAI.AwareOfPlayer = true;
                 StartCoroutine(enemyAI.Search(1));
-                if ((_maxHealth / damage) > (_maxHealth / 2)) StartCoroutine(enemyAI.StunnedTimer(1.5f));
+                if (damage > (_maxHealth / 2)) StartCoroutine(enemyAI.StunnedTimer(1f));
                 GameObject hitTextObject = Instantiate(_hitText, transform.position + (transform.up * 1.5f + transform.right * Random.Range(-0.7f, 0.7f)), transform.rotation);
                 hitTextObject.GetComponent<HitNumber>().Damage = damage;
             }

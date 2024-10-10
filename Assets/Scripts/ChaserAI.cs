@@ -164,4 +164,9 @@ public class ChaserAI : MonoBehaviour
             MeshRenderer.material = Materials[0];
         }
     }
+
+    public void InvestigateNoise(Vector3 position)
+    {
+        agent.SetDestination(position);
+    }
 }
