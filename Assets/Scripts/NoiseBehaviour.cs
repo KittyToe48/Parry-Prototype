@@ -4,30 +4,32 @@ using UnityEngine;
 
 public class NoiseBehaviour : MonoBehaviour
 {
-    [HideInInspector] public bool Alive = false;
-    [HideInInspector] public int Level = 1;
-    [HideInInspector] public float LifeSpan;
+    bool alive = false;
+    int level = 1;
+    float lifeSpan;
+    float radius;
 
     public void CreateNoise(float radius, int level, float lifeSpan, GameObject prefab, Vector3 position)
     {
         GameObject Noise = Instantiate(prefab, position, transform.rotation);
         Noise.GetComponent<SphereCollider>().radius = radius;
-        Noise.GetComponent<NoiseBehaviour>().Level = level;
-        Noise.GetComponent<NoiseBehaviour>().LifeSpan = lifeSpan;
-        Noise.GetComponent<NoiseBehaviour>().Alive = true;
+        Noise.GetComponent<NoiseBehaviour>().radius = radius;
+        Noise.GetComponent<NoiseBehaviour>().level = level;
+        Noise.GetComponent<NoiseBehaviour>().lifeSpan = lifeSpan;
+        Noise.GetComponent<NoiseBehaviour>().alive = true;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        if (Alive) StartCoroutine(NoiseLife());
+        if (alive) StartCoroutine(NoiseLife());
     }
 
     IEnumerator NoiseLife()
     {
-        while (LifeSpan > 0)
+        while (lifeSpan > 0)
         {
-            LifeSpan -= Time.deltaTime;
+            lifeSpan -= Time.deltaTime;
             yield return null;
         }
         Destroy(gameObject);
@@ -35,16 +37,18 @@ public class NoiseBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collided: " + other.name);
-        if (other.tag == "Enemy" && Alive)
+        if (other.tag == "Enemy" && alive)
         {
-            Debug.Log("Heard");
             other.transform.LookAt(transform.position);
             RaycastHit[] hits = new RaycastHit[5];
-            if (Physics.RaycastNonAlloc(transform.position, other.transform.position - transform.position, hits, 100, 1<<7) < Level)
+            int result = Physics.RaycastNonAlloc(transform.position, other.transform.position - transform.position, hits, radius, 1 << 7);
+            Debug.Log("Level: " + level + ", Raycast: " + result);
+            
+            if (result < level)
             {
                 other.GetComponent<ChaserAI>().InvestigateNoise(transform.position);
             }
+            Debug.Log(hits[0].transform.name);
         }
     }
 }

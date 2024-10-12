@@ -92,6 +92,6 @@ public class MeleeCombat : MonoBehaviour
 
     void Whistle()
     {
-        noise.CreateNoise(10, 1, 1.5f, noisePrefab, transform.position);
+        noise.CreateNoise(10, 2, 1.5f, noisePrefab, transform.position);
     }
 }

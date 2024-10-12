@@ -1830,9 +1830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dcbcf557b90cfc4cb61b71a86bb03f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Alive: 0
-  Level: 1
-  LifeSpan: 0
 --- !u!1 &1131603763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,7 +2614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hitText: {fileID: 2293057750349726352, guid: 43c31339a6ce115468bfeb483edbe9dc, type: 3}
   _damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
-  _immortal: 0
+  _immortal: 1
   _timeInvincible: 0.4
   _healthText: {fileID: 1632788496}
   _maxHealth: 30
