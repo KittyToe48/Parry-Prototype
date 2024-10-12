@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MeleeCombat : MonoBehaviour
 {
-    Noise noise;
+    NoiseBehaviour noise;
     [SerializeField] GameObject noisePrefab;
 
     PunchDamage damage;
@@ -22,7 +22,7 @@ public class MeleeCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        noise = GetComponent<Noise>();
+        noise = GetComponent<NoiseBehaviour>();
 
         enemyAI = transform.GetComponentInParent<ChaserAI>();
 

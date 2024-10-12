@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Noise : MonoBehaviour
+public class NoiseBehaviour : MonoBehaviour
 {
     [HideInInspector] public bool Alive = false;
     [HideInInspector] public int Level = 1;
@@ -12,9 +12,9 @@ public class Noise : MonoBehaviour
     {
         GameObject Noise = Instantiate(prefab, position, transform.rotation);
         Noise.GetComponent<SphereCollider>().radius = radius;
-        Noise.GetComponent<Noise>().Level = level;
-        Noise.GetComponent<Noise>().LifeSpan = lifeSpan;
-        Noise.GetComponent<Noise>().Alive = true;
+        Noise.GetComponent<NoiseBehaviour>().Level = level;
+        Noise.GetComponent<NoiseBehaviour>().LifeSpan = lifeSpan;
+        Noise.GetComponent<NoiseBehaviour>().Alive = true;
     }
 
     // Start is called before the first frame update

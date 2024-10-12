@@ -18,8 +18,6 @@ public class PlayerMovement : MonoBehaviour
     float sprintSpeed = 10.0f;
 
     bool sprinting = false;
-    bool sprintingInitial = false;
-    float sprintingFOVMultiplier = 1.2f;
     bool moving = false;
     float targetSpeed;
 
