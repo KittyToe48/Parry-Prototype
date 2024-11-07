@@ -3777,6 +3777,7 @@ GameObject:
   - component: {fileID: 2027680921}
   - component: {fileID: 2027680920}
   - component: {fileID: 2027680929}
+  - component: {fileID: 2027680930}
   - component: {fileID: 2027680919}
   m_Layer: 6
   m_Name: The Player EVOLVED
@@ -4039,6 +4040,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screamDamage: 10
   _screamMultiplier: 0.25
+--- !u!114 &2027680930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027680917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8609c8d66d85bb4d811b1f625c7fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentDamage: 0
+  CurrentMultiplier: 1
+  BaseDamage: 10
+  BaseMultiplier: 1
+  TempHitDamage: []
+  TempHitMultiplier: []
 --- !u!1 &2085986569
 GameObject:
   m_ObjectHideFlags: 0

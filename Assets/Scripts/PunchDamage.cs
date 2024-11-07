@@ -33,20 +33,6 @@ public class PunchDamage : MonoBehaviour
             if (other.gameObject.name != transform.parent.parent.name) //parent.parent kan gå hemskt fel men då vet du att du måste bara dra in referensen till serilizafeiled
             {
                 float damage = _damageManager.CurrentDamage * _damageManager.CurrentMultiplier;
-                //{
-                //    for (int i = 0; i < _damageManager.TempHitDamage.Count; i++)
-                //    {
-                //        damage += _damageManager.TempHitDamage[i];
-                //    }
-                //    for (int i = 0; i < _damageManager.TempAbilitiesDamage.Count; i++)
-                //    {
-                //        damage += _damageManager.TempAbilitiesDamage[i];
-                //    }
-                //    for (int i = 0; i < _damageManager.tem.Count; i++)
-                //    {
-                //        damage += _damageManager.TempAbilitiesDamage[i];
-                //    }
-                //}
                 _audioSource.clip = _hitSound;
                 _audioSource.Play();
 
@@ -86,7 +72,7 @@ public class PunchDamage : MonoBehaviour
 
                     Health health = other.gameObject.GetComponent<Health>();
                     health.TakeDamage(damage);
-                    
+                    _damageManager.ResetTempHits();
                 }
                 //Debug.Log("Damage: " + Damage * DamageMultiplier);
             }
