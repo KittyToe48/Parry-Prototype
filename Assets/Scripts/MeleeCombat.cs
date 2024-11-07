@@ -8,7 +8,10 @@ public class MeleeCombat : MonoBehaviour
     NoiseBehaviour noise;
     [SerializeField] GameObject noisePrefab;
 
-    PunchDamage damage;
+    [SerializeField] float _screamCooldown = 10;
+    bool hasScreamed;
+
+    [SerializeField] DamageManager damage;
 
     int punchCheck = 0;
 
@@ -26,7 +29,7 @@ public class MeleeCombat : MonoBehaviour
 
         enemyAI = transform.GetComponentInParent<ChaserAI>();
 
-        damage = transform.GetChild(0).GetComponent<PunchDamage>();
+        //damage = transform.GetChild(0).GetComponent<PunchDamage>();
         animator = GetComponent<Animator>(); 
     }
 
@@ -37,6 +40,7 @@ public class MeleeCombat : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") HeavyPunchUp();
         if (Input.GetKeyDown(KeyCode.R) && gameObject.tag == "Player") GuardUp();
         if (Input.GetKeyDown(KeyCode.J) && gameObject.tag == "Player") Whistle();
+        if (Input.GetKeyDown(KeyCode.H) && gameObject.tag == "Player") Whistle();
     }
 
     public void PunchUp()
@@ -45,8 +49,6 @@ public class MeleeCombat : MonoBehaviour
         {
             animator.SetTrigger("Punch Up");
             punchCheck = 0;
-            damage.DamageMultiplier = 1;
-            damage.Damage = 10;
             //Debug.Log("Punch Up: " + damage.Damage + ", Multiplier: " + damage.DamageMultiplier);
         }
     }
@@ -55,8 +57,7 @@ public class MeleeCombat : MonoBehaviour
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
-            damage.DamageMultiplier = 1;
-            damage.Damage = 45;
+            damage.AddTemp(1, 40, true);
             animator.SetTrigger("Heavy Up");
         }
     }
@@ -68,7 +69,7 @@ public class MeleeCombat : MonoBehaviour
         //Debug.Log(_punchCheck);
         if (punchCheck == 3)
         {
-            damage.DamageMultiplier = 2;
+            damage.AddTemp(1, 1, false);
             animator.SetTrigger("Punch Down");
             punchCheck = 0;
         }
@@ -93,5 +94,25 @@ public class MeleeCombat : MonoBehaviour
     void Whistle()
     {
         noise.CreateNoise(10, 2, 1.5f, noisePrefab, transform.position);
+    }
+
+    void Scream()
+    {
+        if (!hasScreamed)
+        {
+
+
+
+
+            StartCoroutine(ScreamCooldown());
+        }
+        hasScreamed = true;
+        noise.CreateNoise(20, 3, 1, noisePrefab, transform.position);
+    }
+
+    IEnumerator ScreamCooldown()
+    {
+        yield return new WaitForSeconds(_screamCooldown);
+        hasScreamed = false;
     }
 }

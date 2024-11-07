@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PunchDamage : MonoBehaviour
 {
-    public float Damage = 10;
-    public float DamageMultiplier = 1;
+    [SerializeField] DamageManager _damageManager;
+    //public float Damage = 10;
+    //public float DamageMultiplier = 1;
 
     AudioSource _audioSource;
     [SerializeField] AudioClip _parrySound;
@@ -23,53 +24,72 @@ public class PunchDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Yeouch + " + other.gameObject.gameObject.name);
+        //Debug.Log("Yeouch: " + other.gameObject.name);
+        //Debug.Log("Parent: " + gameObject.transform.parent.parent.name);
+
 
         if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player") // Om något levande blir slaget
         {
-            _audioSource.clip = _hitSound;
-            _audioSource.Play();
-
-            MeleeCombat combat = other.gameObject.transform.GetChild(0).GetComponent<MeleeCombat>();
-            if (combat == null) combat = other.gameObject.GetComponent<MeleeCombat>();
-            if (combat.GuardState) // När man blockar
+            if (other.gameObject.name != transform.parent.parent.name) //parent.parent kan gå hemskt fel men då vet du att du måste bara dra in referensen till serilizafeiled
             {
-                Health health = other.gameObject.GetComponent<Health>();
-                if (health == null) health = other.gameObject.GetComponentInParent<Health>();
-
-                health.TakeDamage((Damage * DamageMultiplier) / 2); // Tar halva skadan
-                ChaserAI stunned = transform.parent.transform.GetComponentInParent<ChaserAI>(); // Tar komponenten från dess parents parent, från handen till arms till fienden
-                StartCoroutine(stunned.StunnedTimer(0.5f)); // Blir stunned
-            }
-            else if (combat.ParryState) // När man blir parried
-            {
-                _audioSource.clip = _parrySound;
+                float damage = _damageManager.CurrentDamage * _damageManager.CurrentMultiplier;
+                //{
+                //    for (int i = 0; i < _damageManager.TempHitDamage.Count; i++)
+                //    {
+                //        damage += _damageManager.TempHitDamage[i];
+                //    }
+                //    for (int i = 0; i < _damageManager.TempAbilitiesDamage.Count; i++)
+                //    {
+                //        damage += _damageManager.TempAbilitiesDamage[i];
+                //    }
+                //    for (int i = 0; i < _damageManager.tem.Count; i++)
+                //    {
+                //        damage += _damageManager.TempAbilitiesDamage[i];
+                //    }
+                //}
+                _audioSource.clip = _hitSound;
                 _audioSource.Play();
-                ChaserAI stunned = transform.parent.transform.GetComponentInParent<ChaserAI>(); // Tar komponenten från dess parents parent, från handen till arms till fienden
-                StartCoroutine(stunned.StunnedTimer(2f)); // Blir stunned
-            }
-            else
-            {
-                if (other.gameObject.tag == "Enemy") 
+
+                MeleeCombat combat = other.gameObject.transform.GetChild(0).GetComponent<MeleeCombat>();
+                if (combat == null) combat = other.gameObject.GetComponent<MeleeCombat>();
+                if (combat.GuardState) // När man blockar
                 {
-                    ChaserAI enemyAI = other.gameObject.GetComponent<ChaserAI>();
-                    if (enemyAI != null)
+                    Health health = other.gameObject.GetComponent<Health>();
+                    if (health == null) health = other.gameObject.GetComponentInParent<Health>();
+
+                    health.TakeDamage((damage) / 2); // Tar halva skadan
+                    ChaserAI stunned = transform.parent.transform.GetComponentInParent<ChaserAI>(); // Tar komponenten från dess parents parent, från handen till arms till fienden
+                    StartCoroutine(stunned.StunnedTimer(0.5f)); // Blir stunned
+                }
+                else if (combat.ParryState) // När man blir parried
+                {
+                    _audioSource.clip = _parrySound;
+                    _audioSource.Play();
+                    ChaserAI stunned = transform.parent.transform.GetComponentInParent<ChaserAI>(); // Tar komponenten från dess parents parent, från handen till arms till fienden
+                    StartCoroutine(stunned.StunnedTimer(2f)); // Blir stunned
+                }
+                else
+                {
+                    if (other.gameObject.tag == "Enemy")
                     {
-                        if (!enemyAI.AwareOfPlayer) DamageMultiplier += 1; // Om man smyger upp på en fiende som inte känner till en gör man 100% mer skada
-                        else
+                        ChaserAI enemyAI = other.gameObject.GetComponent<ChaserAI>();
+                        if (enemyAI != null)
                         {
-                            EnemyVision enemyVision = other.gameObject.GetComponent<EnemyVision>(); // Om man smyger upp på en fiende som känner till en gör man 50% mer skada
-                            if (!enemyVision.CanSeePlayer) DamageMultiplier += 0.5f;
+                            if (!enemyAI.AwareOfPlayer) _damageManager.AddTemp(1, 1, false); // Om man smyger upp på en fiende som inte känner till en gör man 100% mer skada
+                            else
+                            {
+                                EnemyVision enemyVision = other.gameObject.GetComponent<EnemyVision>(); // Om man smyger upp på en fiende som känner till en gör man 50% mer skada
+                                if (!enemyVision.CanSeePlayer) _damageManager.AddTemp(1, 0.5f, false);
+                            }
                         }
                     }
+
+                    Health health = other.gameObject.GetComponent<Health>();
+                    health.TakeDamage(damage);
+                    
                 }
-
-                Health health = other.gameObject.GetComponent<Health>();
-                health.TakeDamage(Damage * DamageMultiplier);
-                DamageMultiplier = 1;
+                //Debug.Log("Damage: " + Damage * DamageMultiplier);
             }
-            //Debug.Log("Damage: " + Damage * DamageMultiplier);
-
         }
     }
 }
