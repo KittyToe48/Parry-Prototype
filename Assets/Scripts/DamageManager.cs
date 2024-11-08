@@ -53,16 +53,22 @@ public class DamageManager : MonoBehaviour
 
     public void ResetTempHits()
     {
-        for (int i = 0; i < TempHitDamage.Count; i++)
+        if (TempHitDamage.Count > 0)
         {
-            CurrentDamage -= TempHitDamage[i];
-            TempHitDamage.Remove(i);
+            for (int i = 0; i < TempHitDamage.Count; i++)
+            {
+                CurrentDamage -= TempHitDamage[i];
+                TempHitDamage.Remove(i);
+            }
         }
-
-        for (int i = 0; i < TempHitMultiplier.Count; i++)
+        
+        if (TempHitMultiplier.Count > 0)
         {
-            CurrentMultiplier -= TempHitMultiplier[i];
-            TempHitMultiplier.Remove(i);
+            for (int i = 0; i < TempHitMultiplier.Count; i++)
+            {
+                CurrentMultiplier -= TempHitMultiplier[i];
+                TempHitMultiplier.Remove(i);
+            }
         }
     }
 }

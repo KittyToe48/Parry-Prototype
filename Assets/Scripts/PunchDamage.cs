@@ -24,7 +24,7 @@ public class PunchDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Yeouch: " + other.gameObject.name);
+        Debug.Log("Yeouch: " + other.gameObject.name);
         //Debug.Log("Parent: " + gameObject.transform.parent.parent.name);
 
 
@@ -32,6 +32,7 @@ public class PunchDamage : MonoBehaviour
         {
             if (other.gameObject.name != transform.parent.parent.name) //parent.parent kan gå hemskt fel men då vet du att du måste bara dra in referensen till serilizafeiled
             {
+                Debug.Log("Here");
                 float damage = _damageManager.CurrentDamage * _damageManager.CurrentMultiplier;
                 _audioSource.clip = _hitSound;
                 _audioSource.Play();

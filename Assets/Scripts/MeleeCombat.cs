@@ -69,7 +69,7 @@ public class MeleeCombat : MonoBehaviour
         //Debug.Log(_punchCheck);
         if (punchCheck == 3)
         {
-            damage.AddTemp(1, 1, false);
+            damage.AddTemp(1, 1, false); 
             animator.SetTrigger("Punch Down");
             punchCheck = 0;
         }

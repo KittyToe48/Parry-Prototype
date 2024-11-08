@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2492501080527149569}
   - component: {fileID: 2049711995879338276}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Arms
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b76642f12fe4f94d9c232f30e3403b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noisePrefab: {fileID: 0}
+  _screamCooldown: 10
+  damage: {fileID: 0}
   ParryState: 0
   GuardState: 0
 --- !u!1 &3274956995661635633
@@ -61,10 +64,10 @@ GameObject:
   - component: {fileID: 3038394984409064267}
   - component: {fileID: 5854198031831334139}
   - component: {fileID: 3039148886660385402}
-  - component: {fileID: -6089671208186960696}
   - component: {fileID: 400651600659732382}
   - component: {fileID: -5902059956748934526}
-  m_Layer: 6
+  - component: {fileID: -6089671208186960696}
+  m_Layer: 0
   m_Name: Dummy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -179,6 +182,47 @@ MonoBehaviour:
   _timeInvincible: 0.5
   _healthText: {fileID: 0}
   _maxHealth: 200
+--- !u!114 &400651600659732382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3274956995661635633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda73f04fd566be478794284940e92d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dummy: 1
+  Stunned: 0
+  Materials: []
+  MeshRenderer: {fileID: 0}
+  _attackCooldown: 0
+  _punchClip: {fileID: 0}
+  AwareOfPlayer: 0
+--- !u!114 &-5902059956748934526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3274956995661635633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadd6447a3db2074084747f9ff04ad88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _whatIsWall:
+    serializedVersion: 2
+    m_Bits: 0
+  Player: {fileID: 0}
+  Angle: 0
+  Radius: 0
+  CanSeePlayer: 0
 --- !u!82 &-6089671208186960696
 AudioSource:
   m_ObjectHideFlags: 0
@@ -275,47 +319,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &400651600659732382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3274956995661635633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fda73f04fd566be478794284940e92d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dummy: 1
-  Stunned: 0
-  Materials: []
-  MeshRenderer: {fileID: 0}
-  _attackCooldown: 0
-  _punchClip: {fileID: 0}
-  AwareOfPlayer: 0
---- !u!114 &-5902059956748934526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3274956995661635633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aadd6447a3db2074084747f9ff04ad88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 0
-  _whatIsWall:
-    serializedVersion: 2
-    m_Bits: 0
-  Player: {fileID: 0}
-  Angle: 0
-  Radius: 0
-  CanSeePlayer: 0
 --- !u!1 &3479243883599741198
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,7 +330,7 @@ GameObject:
   - component: {fileID: 2982937617528329692}
   - component: {fileID: 134154714784451972}
   - component: {fileID: 1325387226564529356}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Sussy Visor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +414,7 @@ GameObject:
   - component: {fileID: 669236378722637816}
   - component: {fileID: 7316384031538679720}
   - component: {fileID: 1004164473135064022}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Fist 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +519,7 @@ GameObject:
   - component: {fileID: 7495386037810441401}
   - component: {fileID: 7238371682958648664}
   - component: {fileID: 4403250541683341047}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Fist 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

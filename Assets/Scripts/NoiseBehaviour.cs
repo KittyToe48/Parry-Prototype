@@ -48,7 +48,7 @@ public class NoiseBehaviour : MonoBehaviour
             {
                 other.GetComponent<ChaserAI>().InvestigateNoise(transform.position);
             }
-            Debug.Log(hits[0].transform.name);
+            //Debug.Log(hits[0].transform.name);
         }
     }
 }
