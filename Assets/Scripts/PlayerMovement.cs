@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 Velocity;
 
     [SerializeField] Transform _groundCheck;
-    float groundDistance = 0.4f;
+    float groundDistance = 0.1f;
     [SerializeField] LayerMask _groundMask;
 
     // Daniels verk
@@ -112,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
     //        sprinting = false;
     //    }
 
-    //    if (axis.magnitude > 0.2) // This counts as a deadzone.
+    //    if (axis.magnitude > 0.2) // This counts as a deadzone. //TODO: KOLLA HÄR FÖR SLIPPERY
     //    {
     //        moving = true;
     //    }

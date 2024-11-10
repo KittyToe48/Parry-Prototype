@@ -75,6 +75,11 @@ public class MeleeCombat : MonoBehaviour
         }
     }
 
+    //IEnumerator ComboReset()
+    //{
+    //    //yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo)
+    //}
+
     public void PunchDown()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.SetBool("Punch Down", false);

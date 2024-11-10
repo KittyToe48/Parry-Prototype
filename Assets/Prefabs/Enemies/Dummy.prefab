@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2049711995879338276}
   m_Layer: 0
   m_Name: Arms
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   _hitText: {fileID: 2293057750349726352, guid: 43c31339a6ce115468bfeb483edbe9dc, type: 3}
   _damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
   _immortal: 0
-  _timeInvincible: 0.5
+  _timeInvincible: 1
   _healthText: {fileID: 0}
   _maxHealth: 200
 --- !u!114 &400651600659732382

@@ -38,12 +38,12 @@ public class DamageManager : MonoBehaviour
                 {
                     TempHitMultiplier.Add(amount);
                     CurrentMultiplier += amount;
+                    Debug.Log("Amount: " + amount);
                 }
                 break;
             case 2:
                 if (damage) CurrentDamage += amount;
-                else CurrentMultiplier += amount;
-
+                else CurrentMultiplier += amount; 
                 //if (damage) TempAbilitiesDamage.Add(amount);
                 //else TempAbilitiesMultiplier.Add(amount);
                 //CurrentDamage += amount;
@@ -53,12 +53,15 @@ public class DamageManager : MonoBehaviour
 
     public void ResetTempHits()
     {
+        Debug.Log("Removing");
         if (TempHitDamage.Count > 0)
         {
             for (int i = 0; i < TempHitDamage.Count; i++)
             {
+                Debug.Log("Damage: " + TempHitDamage[i]);
+
                 CurrentDamage -= TempHitDamage[i];
-                TempHitDamage.Remove(i);
+                TempHitDamage.RemoveAt(i);
             }
         }
         
@@ -66,8 +69,9 @@ public class DamageManager : MonoBehaviour
         {
             for (int i = 0; i < TempHitMultiplier.Count; i++)
             {
+                Debug.Log("Multiplier: " + TempHitMultiplier[i]);
                 CurrentMultiplier -= TempHitMultiplier[i];
-                TempHitMultiplier.Remove(i);
+                TempHitMultiplier.RemoveAt(i);
             }
         }
     }

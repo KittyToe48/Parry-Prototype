@@ -43,7 +43,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (!_immortal && !invincible)
+        if (!_immortal && !invincible) // Om den som tar skada inte har godmode på och om deras invis frames är över.
         {
             audioSource.clip = _damageSound;
             audioSource.Play();
