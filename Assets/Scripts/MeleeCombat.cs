@@ -75,10 +75,10 @@ public class MeleeCombat : MonoBehaviour
         }
     }
 
-    //IEnumerator ComboReset()
-    //{
-    //    //yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo)
-    //}
+    public void AnimationEnd()
+    {
+        damage.ResetTempHits();
+    }
 
     public void PunchDown()
     {

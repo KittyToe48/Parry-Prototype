@@ -3831,7 +3831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hitText: {fileID: 2293057750349726352, guid: 43c31339a6ce115468bfeb483edbe9dc, type: 3}
   _damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
-  _immortal: 1
+  _immortal: 0
   _timeInvincible: 0.4
   _healthText: {fileID: 1632788496}
   _maxHealth: 100

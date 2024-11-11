@@ -69,7 +69,7 @@ public class PunchDamage : MonoBehaviour
                             }
                         }
                     }
-
+                    damage = _damageManager.CurrentDamage * _damageManager.CurrentMultiplier;
                     Health health = other.gameObject.GetComponent<Health>();
                     health.TakeDamage(damage);
                     _damageManager.ResetTempHits();
