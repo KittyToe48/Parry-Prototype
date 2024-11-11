@@ -64,7 +64,7 @@ public class DamageManager : MonoBehaviour
                 TempHitDamage.RemoveAt(i);
             }
         }
-        
+         
         if (TempHitMultiplier.Count > 0)
         {
             for (int i = 0; i < TempHitMultiplier.Count; i++)

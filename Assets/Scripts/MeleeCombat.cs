@@ -6,12 +6,14 @@ using UnityEngine;
 public class MeleeCombat : MonoBehaviour
 {
     NoiseBehaviour noise;
-    [SerializeField] GameObject noisePrefab;
+    [SerializeField] GameObject _noisePrefab;
 
     [SerializeField] float _screamCooldown = 10;
     bool hasScreamed;
 
-    [SerializeField] DamageManager damage;
+    [SerializeField] DamageManager _damage;
+
+    [SerializeField] AbilityManager _abilities;
 
     int punchCheck = 0;
 
@@ -39,14 +41,15 @@ public class MeleeCombat : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && gameObject.tag == "Player") PunchUp();
         if (Input.GetMouseButtonDown(1) && gameObject.tag == "Player") HeavyPunchUp();
         if (Input.GetKeyDown(KeyCode.R) && gameObject.tag == "Player") GuardUp();
+        if (Input.GetKeyDown(KeyCode.H) && gameObject.tag == "Player") Scream();
         if (Input.GetKeyDown(KeyCode.J) && gameObject.tag == "Player") Whistle();
-        if (Input.GetKeyDown(KeyCode.H) && gameObject.tag == "Player") Whistle();
     }
 
     public void PunchUp()
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
+            AnimationSpeed();
             animator.SetTrigger("Punch Up");
             punchCheck = 0;
             //Debug.Log("Punch Up: " + damage.Damage + ", Multiplier: " + damage.DamageMultiplier);
@@ -57,7 +60,8 @@ public class MeleeCombat : MonoBehaviour
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
-            damage.AddTemp(1, 40, true);
+            AnimationSpeed();
+            _damage.AddTemp(1, 40, true);
             animator.SetTrigger("Heavy Up");
         }
     }
@@ -69,22 +73,17 @@ public class MeleeCombat : MonoBehaviour
         //Debug.Log(_punchCheck);
         if (punchCheck == 3)
         {
-            damage.AddTemp(1, 1, false); 
+            _damage.AddTemp(1, 1, false); 
             animator.SetTrigger("Punch Down");
             punchCheck = 0;
         }
     }
 
-    public void AnimationEnd()
-    {
-        damage.ResetTempHits();
-    }
-
-    public void PunchDown()
-    {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.SetBool("Punch Down", false);
-        punchCheck = 0;
-    }
+    //public void PunchDown()
+    //{
+    //    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) animator.SetBool("Punch Down", false);
+    //    punchCheck = 0;
+    //}
 
     public void GuardUp()
     {
@@ -98,26 +97,30 @@ public class MeleeCombat : MonoBehaviour
 
     void Whistle()
     {
-        noise.CreateNoise(10, 2, 1.5f, noisePrefab, transform.position);
+        noise.CreateNoise(10, 2, 1.5f, _noisePrefab, transform.position);
     }
 
     void Scream()
     {
-        if (!hasScreamed)
-        {
-
-
-
-
+        Debug.Log("Screaming 0");
+            _abilities.ApplyScream();
             StartCoroutine(ScreamCooldown());
-        }
-        hasScreamed = true;
-        noise.CreateNoise(20, 3, 1, noisePrefab, transform.position);
+        noise.CreateNoise(20, 3, 1, _noisePrefab, transform.position);
     }
 
     IEnumerator ScreamCooldown()
     {
         yield return new WaitForSeconds(_screamCooldown);
-        hasScreamed = false;
+        _abilities.ResetScream();
+    }
+
+    public void AnimationEnd()
+    {
+        _damage.ResetTempHits();
+    }
+
+    void AnimationSpeed()
+    {
+        if (_abilities.ScreamEnabled && animator.GetCurrentAnimatorStateInfo(0).IsTag("Offense")) animator.speed += _abilities.ScreamAttackSpeed; 
     }
 }

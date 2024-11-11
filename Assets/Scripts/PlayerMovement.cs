@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : MonoBehaviour
 {
     CharacterController characterController;
-    [SerializeField] float _playerSpeed;
+    public float PlayerSpeed;
     Vector3 Velocity;
 
     [SerializeField] Transform _groundCheck;
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //Movement
         axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")); // Vides verk nu :3
-        characterController.Move((axis.x * transform.right + axis.y * transform.forward) * Time.deltaTime * _playerSpeed);
+        characterController.Move((axis.x * transform.right + axis.y * transform.forward) * Time.deltaTime * PlayerSpeed);
 
         //Gravity
         if (Physics.CheckSphere(_groundCheck.position, groundDistance, _groundMask) && Velocity.y < 0) // Kollar om spelaren står på marken, om den inte gör det applicerar den gravitation

@@ -1132,9 +1132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b76642f12fe4f94d9c232f30e3403b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noisePrefab: {fileID: 1914651135480417129, guid: dfedc34524258a146ab1de1027b0b27b, type: 3}
+  _noisePrefab: {fileID: 1914651135480417129, guid: dfedc34524258a146ab1de1027b0b27b, type: 3}
   _screamCooldown: 10
-  damage: {fileID: 2027680930}
+  _damage: {fileID: 2027680930}
+  _abilities: {fileID: 2027680929}
   ParryState: 0
   GuardState: 0
 --- !u!95 &517551059
@@ -3863,7 +3864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84dac0fd9b57f004897d5f1c3a43d7be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerSpeed: 10
+  PlayerSpeed: 7
   _groundCheck: {fileID: 1768493401}
   _groundMask:
     serializedVersion: 2
@@ -3975,6 +3976,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screamDamage: 10
   _screamMultiplier: 0.25
+  _screamMoveSpeed: 1
+  ScreamAttackSpeed: 0.5
+  ScreamEnabled: 0
 --- !u!114 &2027680930
 MonoBehaviour:
   m_ObjectHideFlags: 0
