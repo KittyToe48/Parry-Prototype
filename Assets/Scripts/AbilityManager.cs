@@ -11,13 +11,13 @@ public class AbilityManager : MonoBehaviour
     public float ScreamAttackSpeed;
     public bool ScreamEnabled = false;
 
-    DamageManager damageManager;
+    AttackManager attackManager;
 
     PlayerMovement playerMovement;
 
     private void Start()
     {
-        damageManager = GetComponent<DamageManager>();
+        attackManager = GetComponent<AttackManager>();
         playerMovement= GetComponent<PlayerMovement>();
     }
 
@@ -27,8 +27,8 @@ public class AbilityManager : MonoBehaviour
         if (!ScreamEnabled)
         {
             Debug.Log("Screaming 2");
-            damageManager.AddTemp(2, _screamDamage, true); // Damage
-            damageManager.AddTemp(2, _screamMultiplier, false); // Multiplier
+            attackManager.AddTempDamage(2, _screamDamage, true); // Damage
+            attackManager.AddTempDamage(2, _screamMultiplier, false); // Multiplier
 
             playerMovement.PlayerSpeed += _screamMoveSpeed;
 
@@ -39,8 +39,8 @@ public class AbilityManager : MonoBehaviour
     public void ResetScream()
     {
         ScreamEnabled = false;
-        damageManager.CurrentDamage -= _screamDamage;
-        damageManager.CurrentMultiplier-= _screamMultiplier;
+        attackManager.CurrentDamage -= _screamDamage;
+        attackManager.CurrentMultiplier-= _screamMultiplier;
         playerMovement.PlayerSpeed -= _screamMoveSpeed;
     }
 }

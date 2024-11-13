@@ -11,7 +11,7 @@ public class MeleeCombat : MonoBehaviour
     [SerializeField] float _screamCooldown = 10;
     bool hasScreamed;
 
-    [SerializeField] DamageManager _damage;
+    [SerializeField] AttackManager _attackManager;
 
     [SerializeField] AbilityManager _abilities;
 
@@ -27,6 +27,7 @@ public class MeleeCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("PunchCheck: " + punchCheck);
         noise = GetComponent<NoiseBehaviour>();
 
         enemyAI = transform.GetComponentInParent<ChaserAI>();
@@ -61,7 +62,7 @@ public class MeleeCombat : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             AnimationSpeed();
-            _damage.AddTemp(1, 40, true);
+            _attackManager.AddTempDamage(1, 40, true);
             animator.SetTrigger("Heavy Up");
         }
     }
@@ -73,7 +74,7 @@ public class MeleeCombat : MonoBehaviour
         //Debug.Log(_punchCheck);
         if (punchCheck == 3)
         {
-            _damage.AddTemp(1, 1, false); 
+            _attackManager.AddTempDamage(1, 1, false); 
             animator.SetTrigger("Punch Down");
             punchCheck = 0;
         }
@@ -116,7 +117,7 @@ public class MeleeCombat : MonoBehaviour
 
     public void AnimationEnd()
     {
-        _damage.ResetTempHits();
+        _attackManager.ResetTempDamage();
     }
 
     void AnimationSpeed()

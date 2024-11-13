@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PunchDamage : MonoBehaviour
 {
-    [SerializeField] DamageManager _damageManager;
+    [SerializeField] AttackManager _attackManager;
     //public float Damage = 10;
     //public float DamageMultiplier = 1;
 
@@ -32,7 +32,7 @@ public class PunchDamage : MonoBehaviour
         {
             if (other.gameObject.name != transform.parent.parent.name) //parent.parent kan gå hemskt fel men då vet du att du måste bara dra in referensen till serilizafeiled
             {
-                float damage = _damageManager.CurrentDamage * _damageManager.CurrentMultiplier;
+                float damage = _attackManager.CurrentDamage * _attackManager.CurrentMultiplier;
                 _audioSource.clip = _hitSound;
                 _audioSource.Play();
 
@@ -61,18 +61,18 @@ public class PunchDamage : MonoBehaviour
                         ChaserAI enemyAI = other.gameObject.GetComponent<ChaserAI>();
                         if (enemyAI != null)
                         {
-                            if (!enemyAI.AwareOfPlayer) _damageManager.AddTemp(1, 1, false); // Om man smyger upp på en fiende som inte känner till en gör man 100% mer skada
+                            if (!enemyAI.AwareOfPlayer) _attackManager.AddTempDamage(1, 1, false); // Om man smyger upp på en fiende som inte känner till en gör man 100% mer skada
                             else
                             {
                                 EnemyVision enemyVision = other.gameObject.GetComponent<EnemyVision>(); // Om man smyger upp på en fiende som känner till en gör man 50% mer skada
-                                if (!enemyVision.CanSeePlayer) _damageManager.AddTemp(1, 0.5f, false);
+                                if (!enemyVision.CanSeePlayer) _attackManager.AddTempDamage(1, 0.5f, false);
                             }
                         }
                     }
-                    damage = _damageManager.CurrentDamage * _damageManager.CurrentMultiplier;
+                    damage = _attackManager.CurrentDamage * _attackManager.CurrentMultiplier;
                     Health health = other.gameObject.GetComponent<Health>();
                     health.TakeDamage(damage);
-                    _damageManager.ResetTempHits();
+                    _attackManager.ResetTempDamage();
                 }
                 //Debug.Log("Damage: " + Damage * DamageMultiplier);
             }
