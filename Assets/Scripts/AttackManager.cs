@@ -19,6 +19,8 @@ public class AttackManager : MonoBehaviour
     public List<float> TempHitSpeed = new List<float>();
 
     [Header("Ability Stats")]
+    public float BaseHitSpeed = 1;
+    public float BaseGuardSpeed = 1;
     public float AbilityHitSpeed = 0;
     public float AbilityGuardSpeed = 0;
 
@@ -59,12 +61,11 @@ public class AttackManager : MonoBehaviour
 
     public void ResetTempDamage()
     {
-        Debug.Log("Removing");
         if (TempHitDamage.Count > 0)
         {
             for (int i = 0; i < TempHitDamage.Count; i++)
             {
-                Debug.Log("Damage: " + TempHitDamage[i]);
+                //Debug.Log("Damage: " + TempHitDamage[i]);
 
                 CurrentDamage -= TempHitDamage[i];
                 TempHitDamage.RemoveAt(i);
@@ -75,7 +76,7 @@ public class AttackManager : MonoBehaviour
         {
             for (int i = 0; i < TempHitMultiplier.Count; i++)
             {
-                Debug.Log("Multiplier: " + TempHitMultiplier[i]);
+                //Debug.Log("Multiplier: " + TempHitMultiplier[i]);
                 CurrentMultiplier -= TempHitMultiplier[i];
                 TempHitMultiplier.RemoveAt(i);
             }
@@ -118,6 +119,7 @@ public class AttackManager : MonoBehaviour
         {
             case true:
                 animator.speed += AbilityHitSpeed;
+                Debug.Log("Adding: " + AbilityHitSpeed + ", Result: " + animator.speed);
                 break;
 
             case false:
@@ -128,8 +130,20 @@ public class AttackManager : MonoBehaviour
 
     public void ResetAbilitySpeed(Animator animator)
     {
-        if(AbilityHitSpeed > 0) animator.speed -= AbilityHitSpeed;
-        if(AbilityGuardSpeed > 0) animator.speed -= AbilityGuardSpeed;
+
+        if(AbilityHitSpeed > 0)
+        {
+            animator.speed -= AbilityHitSpeed;
+            if (animator.speed <= 0) animator.speed = BaseHitSpeed;
+        }
+        if(AbilityGuardSpeed > 0)
+        {
+            animator.speed -= AbilityGuardSpeed;
+            if (animator.speed <= 0) animator.speed = BaseGuardSpeed;
+        }
+        Debug.Log("Removing: " + AbilityHitSpeed + ", Result: " + animator.speed);
+         // Ser till att animationen aldrig stoppar
+        
     }
 
 

@@ -49,7 +49,6 @@ public class MeleeCombat : MonoBehaviour
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
-            _attackManager.ApplyAbilitySpeed(true, animator);
             animator.SetTrigger("Punch Up");
             punchCheck = 0;
             //Debug.Log("Punch Up: " + damage.Damage + ", Multiplier: " + damage.DamageMultiplier);
@@ -60,7 +59,6 @@ public class MeleeCombat : MonoBehaviour
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
-            _attackManager.ApplyAbilitySpeed(true, animator);
             _attackManager.AddTempDamage(1, 40, true);
             animator.SetTrigger("Heavy Up");
         }
@@ -87,7 +85,6 @@ public class MeleeCombat : MonoBehaviour
 
     public void GuardUp()
     {
-        _attackManager.ApplyAbilitySpeed(false, animator);
         animator.SetTrigger("Guard Up");
     }
 
@@ -112,11 +109,19 @@ public class MeleeCombat : MonoBehaviour
     IEnumerator ScreamCooldown()
     {
         yield return new WaitForSeconds(_screamCooldown);
-        _abilities.ResetScream();
+        _abilities.ResetScream(animator);
+    }
+
+    public void AnimationStart()
+    {
+        bool type = animator.GetCurrentAnimatorStateInfo(0).IsTag("Offense");
+
+        _attackManager.ApplyAbilitySpeed(type, animator);
     }
 
     public void AnimationEnd()
     {
+        _attackManager.ResetTempDamage();
         _attackManager.ResetAbilitySpeed(animator);
     }
 }

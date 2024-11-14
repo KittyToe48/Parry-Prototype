@@ -37,13 +37,14 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
-    public void ResetScream()
+    public void ResetScream(Animator animator)
     {
         Debug.Log("Reset scream");
         ScreamEnabled = false;
-        attackManager.CurrentDamage -= _screamDamage;
+        attackManager.CurrentDamage -= _screamDamage; 
         attackManager.CurrentMultiplier -= _screamMultiplier;
-        attackManager.AbilityHitSpeed -= _screamAttackSpeed;
+        attackManager.AbilityHitSpeed -= _screamAttackSpeed; // När den här variablen blir till 0 kan den inte ta bort speed från animationen. Animationen måste sättas tillbaka till dess base speed.
+        animator.speed = attackManager.BaseHitSpeed;
         playerMovement.PlayerSpeed -= _screamMoveSpeed;
     }
 }
