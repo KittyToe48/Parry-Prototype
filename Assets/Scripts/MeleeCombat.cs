@@ -27,7 +27,6 @@ public class MeleeCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("PunchCheck: " + punchCheck);
         noise = GetComponent<NoiseBehaviour>();
 
         enemyAI = transform.GetComponentInParent<ChaserAI>();
@@ -50,7 +49,7 @@ public class MeleeCombat : MonoBehaviour
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
-            AnimationSpeed();
+            _attackManager.ApplyAbilitySpeed(true, animator);
             animator.SetTrigger("Punch Up");
             punchCheck = 0;
             //Debug.Log("Punch Up: " + damage.Damage + ", Multiplier: " + damage.DamageMultiplier);
@@ -61,7 +60,7 @@ public class MeleeCombat : MonoBehaviour
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
-            AnimationSpeed();
+            _attackManager.ApplyAbilitySpeed(true, animator);
             _attackManager.AddTempDamage(1, 40, true);
             animator.SetTrigger("Heavy Up");
         }
@@ -88,6 +87,7 @@ public class MeleeCombat : MonoBehaviour
 
     public void GuardUp()
     {
+        _attackManager.ApplyAbilitySpeed(false, animator);
         animator.SetTrigger("Guard Up");
     }
 
@@ -104,7 +104,7 @@ public class MeleeCombat : MonoBehaviour
     void Scream()
     {
         Debug.Log("Screaming 0");
-            _abilities.ApplyScream();
+            _abilities.ApplyScream(animator);
             StartCoroutine(ScreamCooldown());
         noise.CreateNoise(20, 3, 1, _noisePrefab, transform.position);
     }
@@ -117,11 +117,6 @@ public class MeleeCombat : MonoBehaviour
 
     public void AnimationEnd()
     {
-        _attackManager.ResetTempDamage();
-    }
-
-    void AnimationSpeed()
-    {
-        if (_abilities.ScreamEnabled && animator.GetCurrentAnimatorStateInfo(0).IsTag("Offense")) animator.speed += _abilities.ScreamAttackSpeed; 
+        _attackManager.ResetAbilitySpeed(animator);
     }
 }

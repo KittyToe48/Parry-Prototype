@@ -1134,7 +1134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _noisePrefab: {fileID: 1914651135480417129, guid: dfedc34524258a146ab1de1027b0b27b, type: 3}
   _screamCooldown: 10
-  _attackManager: {fileID: 0}
+  _attackManager: {fileID: 2027680930}
   _abilities: {fileID: 2027680929}
   ParryState: 0
   GuardState: 0
@@ -2591,7 +2591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b9cf63a844764488ada1ffc7323634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackManager: {fileID: 0}
+  _attackManager: {fileID: 2027680930}
   _parrySound: {fileID: 8300000, guid: 4c7545b294bc0ba4b8ee7f3b9ac28d98, type: 3}
   _hitSound: {fileID: 8300000, guid: fcb402599d609c447adcde2536434ae9, type: 3}
 --- !u!65 &1266379604
@@ -3977,7 +3977,7 @@ MonoBehaviour:
   _screamDamage: 10
   _screamMultiplier: 0.25
   _screamMoveSpeed: 1
-  ScreamAttackSpeed: 0.5
+  _screamAttackSpeed: 1
   ScreamEnabled: 0
 --- !u!114 &2027680930
 MonoBehaviour:
@@ -3997,6 +3997,9 @@ MonoBehaviour:
   BaseMultiplier: 1
   TempHitDamage: []
   TempHitMultiplier: []
+  TempHitSpeed: []
+  AbilityHitSpeed: 0
+  AbilityGuardSpeed: 0
 --- !u!1 &2085986569
 GameObject:
   m_ObjectHideFlags: 0

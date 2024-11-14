@@ -112,5 +112,25 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    
+    public void ApplyAbilitySpeed(bool attack, Animator animator)
+    {
+        switch(attack)
+        {
+            case true:
+                animator.speed += AbilityHitSpeed;
+                break;
+
+            case false:
+                animator.speed += AbilityGuardSpeed;
+                break;
+        }
+    }
+
+    public void ResetAbilitySpeed(Animator animator)
+    {
+        if(AbilityHitSpeed > 0) animator.speed -= AbilityHitSpeed;
+        if(AbilityGuardSpeed > 0) animator.speed -= AbilityGuardSpeed;
+    }
+
+
 }
