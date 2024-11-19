@@ -76,7 +76,7 @@ public class AttackManager : MonoBehaviour
         {
             for (int i = 0; i < TempHitMultiplier.Count; i++)
             {
-                //Debug.Log("Multiplier: " + TempHitMultiplier[i]);
+    
                 CurrentMultiplier -= TempHitMultiplier[i];
                 TempHitMultiplier.RemoveAt(i);
             }

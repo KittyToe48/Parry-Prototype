@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b9cf63a844764488ada1ffc7323634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageManager: {fileID: -3780627651501493874}
+  _attackManager: {fileID: -3780627651501493874}
   _parrySound: {fileID: 8300000, guid: 4c7545b294bc0ba4b8ee7f3b9ac28d98, type: 3}
   _hitSound: {fileID: 8300000, guid: fcb402599d609c447adcde2536434ae9, type: 3}
 --- !u!82 &6139601638051771372
@@ -391,9 +391,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b76642f12fe4f94d9c232f30e3403b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noisePrefab: {fileID: 0}
+  _noisePrefab: {fileID: 0}
   _screamCooldown: 10
-  damage: {fileID: -3780627651501493874}
+  _attackManager: {fileID: -3780627651501493874}
+  _abilities: {fileID: 0}
   ParryState: 0
   GuardState: 0
 --- !u!1 &7399372267134283722
@@ -609,7 +610,7 @@ MonoBehaviour:
   _hitText: {fileID: 2293057750349726352, guid: 43c31339a6ce115468bfeb483edbe9dc, type: 3}
   _damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
   _immortal: 0
-  _timeInvincible: 0.4
+  _timeInvincible: 0.2
   _healthText: {fileID: 0}
   _maxHealth: 100
 --- !u!114 &4571233096000227199
@@ -675,6 +676,11 @@ MonoBehaviour:
   BaseMultiplier: 1
   TempHitDamage: []
   TempHitMultiplier: []
+  TempHitSpeed: []
+  BaseHitSpeed: 1
+  BaseGuardSpeed: 1
+  AbilityHitSpeed: 0
+  AbilityGuardSpeed: 0
 --- !u!195 &522747308748187072
 NavMeshAgent:
   m_ObjectHideFlags: 0

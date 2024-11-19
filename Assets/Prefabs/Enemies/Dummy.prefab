@@ -46,9 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b76642f12fe4f94d9c232f30e3403b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noisePrefab: {fileID: 0}
+  _noisePrefab: {fileID: 0}
   _screamCooldown: 10
-  damage: {fileID: 0}
+  _attackManager: {fileID: 0}
+  _abilities: {fileID: 0}
   ParryState: 0
   GuardState: 0
 --- !u!1 &3274956995661635633
@@ -179,7 +180,7 @@ MonoBehaviour:
   _hitText: {fileID: 2293057750349726352, guid: 43c31339a6ce115468bfeb483edbe9dc, type: 3}
   _damageSound: {fileID: 8300000, guid: 1cf6e9af81099ae4893c3f38861f8ef1, type: 3}
   _immortal: 0
-  _timeInvincible: 1
+  _timeInvincible: 0.2
   _healthText: {fileID: 0}
   _maxHealth: 200
 --- !u!114 &400651600659732382

@@ -51,6 +51,7 @@ public class MeleeCombat : MonoBehaviour
         {
             animator.SetTrigger("Punch Up");
             punchCheck = 0;
+            AnimationStart();
             //Debug.Log("Punch Up: " + damage.Damage + ", Multiplier: " + damage.DamageMultiplier);
         }
     }
@@ -61,6 +62,7 @@ public class MeleeCombat : MonoBehaviour
         {
             _attackManager.AddTempDamage(1, 40, true);
             animator.SetTrigger("Heavy Up");
+            AnimationStart();
         }
     }
 
@@ -86,6 +88,7 @@ public class MeleeCombat : MonoBehaviour
     public void GuardUp()
     {
         animator.SetTrigger("Guard Up");
+        AnimationStart();
     }
 
     public void GuardDown()
