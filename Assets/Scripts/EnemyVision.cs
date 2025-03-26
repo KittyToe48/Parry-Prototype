@@ -49,28 +49,28 @@ public class EnemyVision : MonoBehaviour
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-            if (Vector3.Angle(transform.forward, directionToTarget) < Angle / 2)
+            if (Vector3.Angle(transform.forward, directionToTarget) < Angle / 2) // If the player is within their field of view
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _whatIsWall))
+                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _whatIsWall)) // If there is no wall between the enemy and the player, will chase player
                 {
                     //Debug.Log("1");
                     CanSeePlayer = true;
-                    enemyAI.Chase();
+                    enemyAI.Chase(); 
                 }
                 else
                 {
                     //Debug.Log("2");
-                    if (CanSeePlayer) StartCoroutine(enemyAI.Search(1));
+                    if (CanSeePlayer) StartCoroutine(enemyAI.Search(1)); // If the enemy has seen the player but the player went behind a wall
                 }
             }
-            else
+            else // If the player went out of their field of view 
             { 
-                if (CanSeePlayer) StartCoroutine(enemyAI.Search(1));
+                if (CanSeePlayer) StartCoroutine(enemyAI.Search(1)); //If they had seen the player previously
             }
         }
-        else if (CanSeePlayer)
+        else if (CanSeePlayer) // Saw the player before but have lost them
         {
             //Debug.Log("Hello2");
             CanSeePlayer = false;
